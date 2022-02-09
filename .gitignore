@@ -1,0 +1,11 @@
+# Compiled class file
+*.class
+.DS_Store
+
+.gradle/
+.idea/
+.settings/
+build/
+out/
+bin/
+resources/
