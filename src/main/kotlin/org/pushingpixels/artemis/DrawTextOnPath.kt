@@ -64,8 +64,7 @@ fun DrawScope.drawTextOnPath(
 //            println("\t[$index] ${glyphs[index]} width=${glyphWidths[index]} position=${glyphPositions[index]}")
 //        }
 
-        val textBlobBuilder = TextBlobBuilder()
-        val pathMeasure = org.jetbrains.skia.PathMeasure(path.asSkiaPath())
+        val pathMeasure = PathMeasure(path.asSkiaPath())
         // How long (in pixels) is our path
         val pathPixelLength = pathMeasure.length
         // How long (in pixels) is our text
@@ -98,8 +97,6 @@ fun DrawScope.drawTextOnPath(
                 // And where is our path tangent pointing? (Needed for rotating the glyph)
                 val glyphMidPointTangent = pathMeasure.getTangent(glyphMidPointOffset)!!
 
-                visibleGlyphs.add(glyphs[index])
-
                 var translationX = glyphMidPointOnPath.x
                 var translationY = glyphMidPointOnPath.y
 
@@ -123,17 +120,19 @@ fun DrawScope.drawTextOnPath(
                         ty = translationY
                     )
                 )
+                visibleGlyphs.add(glyphs[index])
             }
         }
 
         // Create a single text run with all visible glyphs and their transformation matrices
+        val textBlobBuilder = TextBlobBuilder()
         textBlobBuilder.appendRunRSXform(
             font = skiaFont,
             glyphs = visibleGlyphs.toShortArray(),
             xform = visibleGlyphTransforms.toArray(emptyArray())
         )
-
         val textBlob = textBlobBuilder.build()!!
+
         if (shadow != null) {
             nativeCanvas.drawTextBlob(
                 blob = textBlob,

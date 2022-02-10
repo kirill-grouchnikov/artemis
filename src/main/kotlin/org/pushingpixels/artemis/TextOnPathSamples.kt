@@ -48,7 +48,7 @@ import androidx.compose.ui.window.*
 
 fun main() = application {
     Window(
-        onCloseRequest = ::exitApplication, title = "Drawing text on path",
+        onCloseRequest = ::exitApplication, title = "Drawing text on a path",
         state = rememberWindowState(
             placement = WindowPlacement.Floating,
             position = WindowPosition.Aligned(Alignment.Center),
