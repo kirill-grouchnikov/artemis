@@ -28,7 +28,7 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.pushingpixels.artemis
+package org.pushingpixels.artemis.charts
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
@@ -53,6 +53,7 @@ import okio.Okio
 import org.jetbrains.skia.Color4f
 import org.jetbrains.skia.Font
 import org.jetbrains.skia.Typeface
+import org.pushingpixels.artemis.drawTextOnPath
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory

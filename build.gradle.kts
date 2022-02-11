@@ -19,6 +19,9 @@ dependencies {
     implementation(compose.desktop.currentOs)
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+    implementation("org.pushing-pixels:aurora-theming:1.0.1")
+    implementation("org.pushing-pixels:aurora-component:1.0.1")
+    implementation("org.pushing-pixels:aurora-window:1.0.1")
 }
 
 tasks.withType<KotlinCompile> {
