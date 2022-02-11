@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Artemis, Kirill Grouchnikov. All Rights Reserved.
+ * Copyright (c) 2021-22 Artemis, Kirill Grouchnikov. All Rights Reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
