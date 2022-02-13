@@ -10,4 +10,4 @@ out/
 bin/
 
 src/main/resources/wikipedia/
-src/main/kotlin/org/pushingpixels/artemis/svg
+src/gen/

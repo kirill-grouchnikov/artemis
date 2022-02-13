@@ -1,10 +1,10 @@
 import org.jetbrains.compose.compose
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.6.10"
     id("org.jetbrains.compose") version "1.1.0-alpha04"
+    idea
 }
 
 group = "org.pushing-pixels.artemis"
@@ -58,5 +58,11 @@ kotlin {
                 kotlin.srcDir("$rootDir/src/gen/kotlin")
             }
         }
+    }
+}
+
+idea {
+    module {
+        generatedSourceDirs.add(file("$rootDir/src/gen/kotlin"))
     }
 }
