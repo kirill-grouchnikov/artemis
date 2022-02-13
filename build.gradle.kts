@@ -40,12 +40,9 @@ dependencies {
 
 tasks.register<org.pushingpixels.aurora.tools.svgtranscoder.gradle.TranscodeTask>("transcodeSingle") {
     inputDirectory = file("src/main/resources/svg")
-    outputDirectory = file("src/main/kotlin/org/pushingpixels/artemis/svg")
+    outputDirectory = file("src/gen/kotlin/org/pushingpixels/artemis/svg")
     outputPackageName = "org.pushingpixels.artemis.svg"
     transcode()
-}
-
-tasks.withType<KotlinCompile> {
 }
 
 tasks.withType<KotlinCompile> {
@@ -53,12 +50,13 @@ tasks.withType<KotlinCompile> {
     dependsOn("transcodeSingle")
 }
 
-compose.desktop {
-    application {
-        mainClass = "org.pushingpixels.artemis.HelloWorldKt"
-        nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "artemis"
+kotlin {
+    sourceSets {
+        kotlin {
+            sourceSets["main"].apply {
+                kotlin.srcDir("$rootDir/src/main/kotlin")
+                kotlin.srcDir("$rootDir/src/gen/kotlin")
+            }
         }
     }
 }
