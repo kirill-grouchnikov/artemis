@@ -38,6 +38,7 @@ import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.rememberWindowState
 import org.jetbrains.skia.Data
 import org.jetbrains.skia.RuntimeEffect
+import org.pushingpixels.artemis.svg.radiance_menu
 import org.pushingpixels.aurora.component.model.LabelContentModel
 import org.pushingpixels.aurora.component.model.LabelPresentationModel
 import org.pushingpixels.aurora.component.model.SelectorContentModel
@@ -63,6 +64,7 @@ fun main() = auroraApplication {
     AuroraWindow(
         skin = skin,
         title = "Gradients Demo",
+        icon = radiance_menu(),
         iconFilterStrategy = IconFilterStrategy.ThemedFollowText,
         state = state,
         undecorated = true,

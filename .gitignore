@@ -8,4 +8,6 @@
 build/
 out/
 bin/
-resources/
+
+src/main/resources/wikipedia/
+src/main/kotlin/org/pushingpixels/artemis/svg

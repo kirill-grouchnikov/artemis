@@ -133,7 +133,7 @@ val colorHigh = Color(67, 20, 119)
 
 val MRNA = DataSet(
     name = "MRNA",
-    localSource = "/mrna.json",
+    localSource = "/wikipedia/mrna.json",
     remoteQuery = "Messenger_RNA",
     gradients = Gradients(
         0.0f to colorLow,
@@ -144,7 +144,7 @@ val MRNA = DataSet(
 )
 val SOURDOUGH = DataSet(
     name = "Sourdough",
-    localSource = "/sourdough.json",
+    localSource = "/wikipedia/sourdough.json",
     remoteQuery = "Sourdough",
     gradients = Gradients(
         0.0f to colorLow,
@@ -155,7 +155,7 @@ val SOURDOUGH = DataSet(
 )
 val REBECCA_BLACK = DataSet(
     name = "Rebecca Black",
-    localSource = "/rebecca_black.json",
+    localSource = "/wikipedia/rebecca_black.json",
     remoteQuery = "Rebecca_Black",
     gradients = Gradients(
         0.0f to colorLow,
@@ -166,7 +166,7 @@ val REBECCA_BLACK = DataSet(
 )
 val PRIME_NUMBER = DataSet(
     name = "Prime Number",
-    localSource = "/prime_number.json",
+    localSource = "/wikipedia/prime_number.json",
     remoteQuery = "Prime_number",
     gradients = Gradients(
         0.0f to colorLow,
