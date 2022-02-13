@@ -39,6 +39,7 @@ import androidx.compose.ui.window.rememberWindowState
 import org.jetbrains.skia.Data
 import org.jetbrains.skia.RuntimeEffect
 import org.pushingpixels.artemis.svg.radiance_menu
+import org.pushingpixels.artemis.horizontalSrgbGradient
 import org.pushingpixels.aurora.component.model.LabelContentModel
 import org.pushingpixels.aurora.component.model.LabelPresentationModel
 import org.pushingpixels.aurora.component.model.SelectorContentModel
@@ -187,61 +188,7 @@ private val DefaultBrushCreator: (Float, GradientColors) -> Brush =
 
 private val LinearSrgbSkiaBrushCreator: (Float, GradientColors) -> Brush =
     { width, colors ->
-        val sksl = """
-            // https://bottosson.github.io/posts/colorwrong/#what-can-we-do%3F
-            vec3 linearSrgbToSrgb(vec3 x) {
-                vec3 xlo = 12.92*x;
-                vec3 xhi = 1.055 * pow(x, vec3(1.0/2.4)) - 0.055;
-                return mix(xlo, xhi, step(vec3(0.0031308), x));
-            
-            }
-            
-            vec3 srgbToLinearSrgb(vec3 x) {
-                vec3 xlo = x / 12.92;
-                vec3 xhi = pow((x + 0.055)/(1.055), vec3(2.4));
-                return mix(xlo, xhi, step(vec3(0.04045), x));
-            }
-            
-            uniform vec4 start;
-            uniform vec4 end;
-            uniform float width;
-
-            half4 main(vec2 fragcoord) {
-               // Implicit assumption in here that colors are full opacity
-               float fraction = fragcoord.x / width;
-               // Convert start and end colors to linear SRGB
-               vec3 linearStart = srgbToLinearSrgb(start.xyz);
-               vec3 linearEnd = srgbToLinearSrgb(end.xyz);
-               // Interpolate in linear SRGB space
-               vec3 linearInterpolated = mix(linearStart, linearEnd, fraction);
-               // And convert back to SRGB
-               return vec4(linearSrgbToSrgb(linearInterpolated), 1.0);
-            }
-        """
-
-        val dataBuffer = ByteBuffer.allocate(36).order(ByteOrder.LITTLE_ENDIAN)
-        // RGBA colorLight
-        dataBuffer.putFloat(0, colors.start.red)
-        dataBuffer.putFloat(4, colors.start.green)
-        dataBuffer.putFloat(8, colors.start.blue)
-        dataBuffer.putFloat(12, colors.start.alpha)
-        // RGBA colorDark
-        dataBuffer.putFloat(16, colors.end.red)
-        dataBuffer.putFloat(20, colors.end.green)
-        dataBuffer.putFloat(24, colors.end.blue)
-        dataBuffer.putFloat(28, colors.end.alpha)
-        // Width
-        dataBuffer.putFloat(32, width)
-
-        val effect = RuntimeEffect.makeForShader(sksl)
-        val shader = effect.makeShader(
-            uniforms = Data.makeFromBytes(dataBuffer.array()),
-            children = null,
-            localMatrix = null,
-            isOpaque = false
-        )
-
-        ShaderBrush(shader)
+        horizontalSrgbGradient(width, colors.start, colors.end)
     }
 
 private val OklabSkiaBrushCreator: (Float, GradientColors) -> Brush =
