@@ -50,6 +50,12 @@ tasks.withType<KotlinCompile> {
     dependsOn("transcodeSingle")
 }
 
+configurations {
+    all {
+        exclude(group = "org.jetbrains.compose.material", module = "material")
+    }
+}
+
 kotlin {
     sourceSets {
         kotlin {
