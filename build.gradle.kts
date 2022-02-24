@@ -18,9 +18,9 @@ buildscript {
     }
 
     dependencies {
-        classpath("org.jetbrains.compose:compose-gradle-plugin:1.1.0-alpha04")
+        classpath("org.jetbrains.compose:compose-gradle-plugin:1.1.0")
         classpath(kotlin("gradle-plugin", version = "1.6.10"))
-        classpath("org.pushing-pixels:aurora-tools-svg-transcoder-gradle-plugin:1.0.1")
+        classpath("org.pushing-pixels:aurora-tools-svg-transcoder-gradle-plugin:1.1.0")
     }
 }
 
@@ -33,9 +33,9 @@ dependencies {
     implementation(compose.desktop.currentOs)
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
-    implementation("org.pushing-pixels:aurora-theming:1.0.1")
-    implementation("org.pushing-pixels:aurora-component:1.0.1")
-    implementation("org.pushing-pixels:aurora-window:1.0.1")
+    implementation("org.pushing-pixels:aurora-theming:1.1.0")
+    implementation("org.pushing-pixels:aurora-component:1.1.0")
+    implementation("org.pushing-pixels:aurora-window:1.1.0")
 }
 
 tasks.register<org.pushingpixels.aurora.tools.svgtranscoder.gradle.TranscodeTask>("transcodeSingle") {
