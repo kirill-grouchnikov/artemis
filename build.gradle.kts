@@ -12,6 +12,7 @@ version = "1.0.0"
 
 buildscript {
     repositories {
+        mavenLocal()
         mavenCentral()
         maven("https://plugins.gradle.org/m2/")
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
@@ -25,6 +26,7 @@ buildscript {
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
     maven { url = uri("https://maven.pkg.jetbrains.space/public/p/compose/dev") }
 }
@@ -33,9 +35,9 @@ dependencies {
     implementation(compose.desktop.currentOs)
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
-    implementation("org.pushing-pixels:aurora-theming:1.1.0")
-    implementation("org.pushing-pixels:aurora-component:1.1.0")
-    implementation("org.pushing-pixels:aurora-window:1.1.0")
+    implementation("org.pushing-pixels:aurora-theming:1.2-SNAPSHOT")
+    implementation("org.pushing-pixels:aurora-component:1.2-SNAPSHOT")
+    implementation("org.pushing-pixels:aurora-window:1.2-SNAPSHOT")
 }
 
 tasks.register<org.pushingpixels.aurora.tools.svgtranscoder.gradle.TranscodeTask>("transcodeSingle") {
@@ -53,6 +55,12 @@ tasks.withType<KotlinCompile> {
 configurations {
     all {
         exclude(group = "org.jetbrains.compose.material", module = "material")
+        resolutionStrategy.eachDependency {
+            if (requested.group == "org.jetbrains.skiko") {
+                useVersion("0.0.0-SNAPSHOT")
+                because("Replacing for local development")
+            }
+        }
     }
 }
 
