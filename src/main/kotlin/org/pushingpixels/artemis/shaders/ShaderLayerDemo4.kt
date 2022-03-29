@@ -19,7 +19,10 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asComposeRenderEffect
@@ -116,29 +119,29 @@ fun main() = auroraApplication {
             Row(
                 horizontalArrangement = Arrangement.Center
             ) {
-                BoxWithButton(
-                    buttonProjection = CommandButtonProjection(
-                        contentModel = Command(text = "Click me 2!", action = { println("Clicked!") },
-                            actionPreview = object : CommandActionPreview {
-                                override fun onCommandPreviewActivated(command: Command) {
-                                    coroutineScope.launch {
-                                        hoverAmount.animateTo(targetValue = 1.0f, animationSpec = tweenSpec)
-                                    }
+                CommandButtonProjection(
+                    contentModel = Command(text = "Click me 2!", action = { println("Clicked!") },
+                        actionPreview = object : CommandActionPreview {
+                            override fun onCommandPreviewActivated(command: Command) {
+                                coroutineScope.launch {
+                                    hoverAmount.animateTo(targetValue = 1.0f, animationSpec = tweenSpec)
                                 }
+                            }
 
-                                override fun onCommandPreviewCanceled(command: Command) {
-                                    coroutineScope.launch {
-                                        hoverAmount.animateTo(targetValue = 0.0f, animationSpec = tweenSpec)
-                                    }
+                            override fun onCommandPreviewCanceled(command: Command) {
+                                coroutineScope.launch {
+                                    hoverAmount.animateTo(targetValue = 0.0f, animationSpec = tweenSpec)
                                 }
-                            })
-                    ),
-                    imageFilter = ImageFilter.makeRuntimeShader(
-                        runtimeShaderBuilder = compositeShaderBuilder,
-                        shaderNames = arrayOf("content", "blurred"),
-                        inputs = arrayOf(null, blurImageFilter)
-                    ),
-                    boxModifier = Modifier.onGloballyPositioned {
+                            }
+                        })
+                ).project(
+                    modifier = Modifier.graphicsLayer(
+                        renderEffect = ImageFilter.makeRuntimeShader(
+                            runtimeShaderBuilder = compositeShaderBuilder,
+                            shaderNames = arrayOf("content", "blurred"),
+                            inputs = arrayOf(null, blurImageFilter)
+                        ).asComposeRenderEffect()
+                    ).onGloballyPositioned {
                         buttonBoxWidth.value = it.size.width.toFloat()
                     }
                 )
@@ -156,27 +159,6 @@ fun main() = auroraApplication {
                 )
             ).project()
         }
-    }
-}
-
-@Composable
-private fun BoxWithButton(
-    buttonProjection: CommandButtonProjection,
-    imageFilter: ImageFilter,
-    boxModifier: Modifier = Modifier
-) {
-    // The outer box is needed to provide a bit of paddings so that the render effect
-    // is not clipped by the button bounds - this allows effects like blur to be fully
-    // visible and not partially clipped.
-    Box(
-        modifier = boxModifier.graphicsLayer(
-            renderEffect = imageFilter.asComposeRenderEffect(),
-            clip = true
-        ).padding(all = 6.dp)
-    ) {
-        buttonProjection.project(
-            modifier = Modifier.align(Alignment.Center)
-        )
     }
 }
 

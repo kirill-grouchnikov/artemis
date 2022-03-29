@@ -100,27 +100,29 @@ fun main() = auroraApplication {
                 modifier = Modifier.align(Alignment.Center),
                 horizontalArrangement = Arrangement.Center
             ) {
-                BoxWithButton(
-                    buttonProjection = CommandButtonProjection(
-                        contentModel = Command(text = "Click me!", action = { println("Clicked!") })
-                    ),
-                    imageFilter = ImageFilter.makeRuntimeShader(
-                        runtimeShaderBuilder = redShaderBuilder,
-                        shaderName = "content",
-                        input = null
+                CommandButtonProjection(
+                    contentModel = Command(text = "Click me!", action = { println("Clicked!") })
+                ).project(
+                    modifier = Modifier.graphicsLayer(
+                        renderEffect = ImageFilter.makeRuntimeShader(
+                            runtimeShaderBuilder = redShaderBuilder,
+                            shaderName = "content",
+                            input = null
+                        ).asComposeRenderEffect(),
                     )
                 )
 
                 Spacer(modifier = Modifier.width(12.dp))
 
-                BoxWithButton(
-                    buttonProjection = CommandButtonProjection(
-                        contentModel = Command(text = "Click me 2!", action = { println("Clicked!") })
-                    ),
-                    imageFilter = ImageFilter.makeRuntimeShader(
-                        runtimeShaderBuilder = blurShaderBuilder,
-                        shaderNames = arrayOf("content", "blurred"),
-                        inputs = arrayOf(null, blurImageFilter)
+                CommandButtonProjection(
+                    contentModel = Command(text = "Click me 2!", action = { println("Clicked!") })
+                ).project(
+                    modifier = Modifier.graphicsLayer(
+                        renderEffect = ImageFilter.makeRuntimeShader(
+                            runtimeShaderBuilder = blurShaderBuilder,
+                            shaderNames = arrayOf("content", "blurred"),
+                            inputs = arrayOf(null, blurImageFilter)
+                        ).asComposeRenderEffect(),
                     )
                 )
             }
@@ -129,23 +131,6 @@ fun main() = auroraApplication {
                 contentModel = Command(text = "Bottom button!", action = { println("Clicked!") })
             ).project(modifier = Modifier.align(Alignment.BottomCenter))
         }
-    }
-}
-
-@Composable
-private fun BoxWithButton(buttonProjection: CommandButtonProjection, imageFilter: ImageFilter) {
-    // The outer box is needed to provide a bit of paddings so that the render effect
-    // is not clipped by the button bounds - this allows effects like blur to be fully
-    // visible and not partially clipped.
-    Box(
-        modifier = Modifier.graphicsLayer(
-            renderEffect = imageFilter.asComposeRenderEffect(),
-            clip = true
-        ).padding(all = 6.dp)
-    ) {
-        buttonProjection.project(
-            modifier = Modifier.align(Alignment.Center)
-        )
     }
 }
 
