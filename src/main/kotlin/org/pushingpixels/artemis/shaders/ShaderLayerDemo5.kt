@@ -76,47 +76,22 @@ fun main() = auroraApplication {
         uniform float glowGreen;
         uniform float glowBlue;
 
+        // Simplified version of SDF (signed distance function) for a rounded box
+        // from https://www.iquilezles.org/www/articles/distfunctions2d/distfunctions2d.htm
+        float roundedRectangleSDF(vec2 position, vec2 box, float radius) {
+            vec2 q = abs(position) - box + vec2(radius);
+            return min(max(q.x, q.y), 0.0) + length(max(q, 0.0)) - radius;   
+        }
+
         vec4 main(vec2 coord) {
+            vec2 rectangle = vec2(width, height) / 2.0;
+            float distanceToClosestEdge = roundedRectangleSDF(
+                coord - rectangle, rectangle, radius);
+
             vec4 c = content.eval(coord);
-            if (c.a > 0.0) {
+            if (distanceToClosestEdge <= 0.0) {
                 // We're inside the content
                 return c;
-            }
-            
-            float distanceToClosestEdge = 0.0;
-            
-            if ((coord.x < radius) && (coord.y < radius)) {
-                // Top-left corner
-                float dx = radius - coord.x;
-                float dy = radius - coord.y;
-                distanceToClosestEdge = sqrt(dx*dx + dy*dy) - radius;
-            } else if ((coord.x > (width - radius)) && (coord.y < radius)) {
-                // Top-right corner
-                float dx = coord.x - (width - radius);
-                float dy = radius - coord.y;
-                distanceToClosestEdge = sqrt(dx*dx + dy*dy) - radius;
-            } else if ((coord.x > (width - radius)) && (coord.y > (height - radius))) {
-                // Bottom-right corner
-                float dx = coord.x - (width - radius);
-                float dy = coord.y - (height - radius);
-                distanceToClosestEdge = sqrt(dx*dx + dy*dy) - radius;
-            } else if ((coord.x < radius) && (coord.y > (height - radius))) {
-                // Bottom-left corner
-                float dx = radius - coord.x;
-                float dy = coord.y - (height - radius);
-                distanceToClosestEdge = sqrt(dx*dx + dy*dy) - radius;
-            } else if (coord.x < 0.0) {
-                // Left edge
-                distanceToClosestEdge = -coord.x;
-            } else if (coord.y < 0.0) {
-                // Top edge
-                distanceToClosestEdge = -coord.y;
-            } else if (coord.x > width) {
-                // Right edge
-                distanceToClosestEdge = coord.x - width;
-            } else if (coord.y > height) {
-                // Bottom edge
-                distanceToClosestEdge = coord.y - height;
             }
             
             // How much glow do we want?
