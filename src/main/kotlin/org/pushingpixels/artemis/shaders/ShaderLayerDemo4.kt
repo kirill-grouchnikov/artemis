@@ -43,6 +43,7 @@ import org.pushingpixels.aurora.component.model.CommandActionPreview
 import org.pushingpixels.aurora.component.model.SliderContentModel
 import org.pushingpixels.aurora.component.projection.CommandButtonProjection
 import org.pushingpixels.aurora.component.projection.SliderProjection
+import org.pushingpixels.aurora.theming.AuroraSkin
 import org.pushingpixels.aurora.theming.businessSkin
 import org.pushingpixels.aurora.window.AuroraWindow
 import org.pushingpixels.aurora.window.auroraApplication
@@ -76,7 +77,6 @@ fun main() = auroraApplication {
         """
 
     val compositeRuntimeEffect = RuntimeEffect.makeForShader(compositeSksl)
-    val tweenSpec = tween<Float>(durationMillis = 350, easing = FastOutSlowInEasing)
 
     AuroraWindow(
         skin = skin,
@@ -85,11 +85,12 @@ fun main() = auroraApplication {
         undecorated = true,
         onCloseRequest = ::exitApplication,
     ) {
+        val tweenSpec = tween<Float>(durationMillis = AuroraSkin.animationConfig.regular, easing = FastOutSlowInEasing)
         val hoverAmount = remember { Animatable(0.0f) }
 
         // The cutoff line between the blurred part and the colorized part is dynamic
         // based on the button width
-        val buttonBoxWidth = remember { mutableStateOf(0.0f) }
+        val buttonWidth = remember { mutableStateOf(0.0f) }
         val cutoffPercent = remember { mutableStateOf(0.5f) }
 
         // The amount of "redness" is the inverse of the hover amount (full red
@@ -97,7 +98,7 @@ fun main() = auroraApplication {
         val redness = derivedStateOf { 1.0f - hoverAmount.value }
 
         val compositeShaderBuilder = RuntimeShaderBuilder(compositeRuntimeEffect)
-        compositeShaderBuilder.uniform("width", buttonBoxWidth.value)
+        compositeShaderBuilder.uniform("width", buttonWidth.value)
         compositeShaderBuilder.uniform("cutoffPercent", cutoffPercent.value)
         compositeShaderBuilder.uniform("redness", redness.value)
 
@@ -142,7 +143,7 @@ fun main() = auroraApplication {
                             inputs = arrayOf(null, blurImageFilter)
                         ).asComposeRenderEffect()
                     ).onGloballyPositioned {
-                        buttonBoxWidth.value = it.size.width.toFloat()
+                        buttonWidth.value = it.size.width.toFloat()
                     }
                 )
             }
