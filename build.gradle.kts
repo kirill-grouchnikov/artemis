@@ -57,8 +57,8 @@ configurations {
         exclude(group = "org.jetbrains.compose.material", module = "material")
         resolutionStrategy.eachDependency {
             if (requested.group == "org.jetbrains.skiko") {
-                useVersion("0.0.0-SNAPSHOT")
-                because("Replacing for local development")
+                useVersion("0.7.18")
+                because("Pin to version that has shader bindings")
             }
         }
     }
