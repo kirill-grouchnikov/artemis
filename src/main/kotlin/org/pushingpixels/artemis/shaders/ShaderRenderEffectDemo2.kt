@@ -16,33 +16,26 @@
 package org.pushingpixels.artemis.shaders
 
 import androidx.compose.animation.core.*
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asComposeRenderEffect
-import androidx.compose.ui.graphics.asSkiaColorFilter
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.rememberWindowState
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import org.jetbrains.skia.*
 import org.pushingpixels.aurora.component.model.Command
 import org.pushingpixels.aurora.component.model.CommandActionPreview
 import org.pushingpixels.aurora.component.projection.CommandButtonProjection
 import org.pushingpixels.aurora.theming.businessSkin
-import org.pushingpixels.aurora.theming.colorscheme.OrangeColorScheme
-import org.pushingpixels.aurora.theming.utils.getColorSchemeFilter
 import org.pushingpixels.aurora.window.AuroraWindow
 import org.pushingpixels.aurora.window.auroraApplication
-import java.nio.ByteBuffer
-import java.nio.ByteOrder
 
 fun main() = auroraApplication {
     val state = rememberWindowState(
