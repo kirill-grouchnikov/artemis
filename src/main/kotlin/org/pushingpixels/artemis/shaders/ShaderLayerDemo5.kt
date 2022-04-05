@@ -72,9 +72,7 @@ fun main() = auroraApplication {
         uniform float maxGlowAmount;
         uniform float glowCutoffDistance;
         
-        uniform float glowRed;
-        uniform float glowGreen;
-        uniform float glowBlue;
+        uniform vec4 glowColor;
 
         // Simplified version of SDF (signed distance function) for a rounded box
         // from https://www.iquilezles.org/www/articles/distfunctions2d/distfunctions2d.htm
@@ -99,9 +97,9 @@ fun main() = auroraApplication {
             // Force quicker dissipation of the glow
             distanceFraction = pow(distanceFraction, 1.8);
             
-            float glowAmount = maxGlowAmount * distanceFraction;
+            float glowAmount = maxGlowAmount * distanceFraction * glowColor.a;
             
-            return vec4(glowRed * glowAmount, glowGreen * glowAmount, glowBlue * glowAmount, glowAmount);
+            return vec4(glowColor.r * glowAmount, glowColor.g * glowAmount, glowColor.b * glowAmount, glowAmount);
         }
         """
 
@@ -140,9 +138,10 @@ fun main() = auroraApplication {
                 associationKind = ColorSchemeAssociationKind.Fill,
                 componentState = ComponentState.RolloverUnselected
             ).backgroundFillColor
-            glowShaderBuilder.uniform("glowRed", rolloverFill.red)
-            glowShaderBuilder.uniform("glowGreen", rolloverFill.green)
-            glowShaderBuilder.uniform("glowBlue", rolloverFill.blue)
+            glowShaderBuilder.uniform(
+                "glowColor", rolloverFill.red, rolloverFill.green,
+                rolloverFill.blue, rolloverFill.alpha
+            )
 
             Row(
                 modifier = Modifier.align(Alignment.Center),

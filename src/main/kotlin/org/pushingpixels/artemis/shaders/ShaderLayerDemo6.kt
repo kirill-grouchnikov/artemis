@@ -25,10 +25,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.rememberWindowState
-import org.jetbrains.skia.FilterTileMode
-import org.jetbrains.skia.ImageFilter
-import org.jetbrains.skia.RuntimeEffect
-import org.jetbrains.skia.RuntimeShaderBuilder
+import org.jetbrains.skia.*
+import org.jetbrains.skia.Shader
 import org.pushingpixels.aurora.component.model.Command
 import org.pushingpixels.aurora.component.projection.CommandButtonProjection
 import org.pushingpixels.aurora.theming.mistSilverSkin
@@ -44,28 +42,18 @@ fun main() = auroraApplication {
 
     val skin = mutableStateOf(mistSilverSkin())
 
-    val redSksl = """
-        uniform shader content;
-        vec4 main(vec2 coord) {
-            vec4 c = content.eval(coord);
-            return vec4(1.0 * c.a, c.g * c.a, c.b * c.a, c.a);
-        }
-        """
-
-    val redRuntimeEffect = RuntimeEffect.makeForShader(redSksl)
-    val redShaderBuilder = RuntimeShaderBuilder(redRuntimeEffect)
-
     val compositeSksl = """
         uniform shader content;
-        uniform shader blurred;
+        uniform shader gradient;
         uniform float cutoff;
+        
         vec4 main(vec2 coord) {
             vec4 c = content.eval(coord);
-            vec4 b = blurred.eval(coord);
+            vec4 b = gradient.eval(coord);
             if (coord.x > cutoff) {
                 return vec4(1.0 * c.a, c.g * c.a, c.b * c.a, c.a);
             } else {
-                return b;
+                return vec4(b.r * c.a, b.g * c.a, b.b * c.a, c.a);
             }
         }
         """
@@ -73,7 +61,15 @@ fun main() = auroraApplication {
     val compositeRuntimeEffect = RuntimeEffect.makeForShader(compositeSksl)
     val compositeShaderBuilder = RuntimeShaderBuilder(compositeRuntimeEffect)
     compositeShaderBuilder.uniform("cutoff", 100.0f)
-    val blurImageFilter = ImageFilter.makeBlur(sigmaX = 2.0f, sigmaY = 2.0f, mode = FilterTileMode.DECAL)
+    compositeShaderBuilder.child(
+        "gradient",
+        Shader.Companion.makeLinearGradient(
+            x0 = 0.0f, y0 = 0.0f,
+            x1 = 200.0f, y1 = 0.0f,
+            colors = intArrayOf(org.jetbrains.skia.Color.RED, org.jetbrains.skia.Color.BLUE),
+            style = GradientStyle.DEFAULT
+        )
+    )
 
     AuroraWindow(
         skin = skin,
@@ -96,23 +92,9 @@ fun main() = auroraApplication {
                 ).project(
                     modifier = Modifier.graphicsLayer(
                         renderEffect = ImageFilter.makeRuntimeShader(
-                            runtimeShaderBuilder = redShaderBuilder,
-                            shaderName = "content",
-                            input = null
-                        ).asComposeRenderEffect(),
-                    )
-                )
-
-                Spacer(modifier = Modifier.width(12.dp))
-
-                CommandButtonProjection(
-                    contentModel = Command(text = "Click me 2!", action = { println("Clicked!") })
-                ).project(
-                    modifier = Modifier.graphicsLayer(
-                        renderEffect = ImageFilter.makeRuntimeShader(
                             runtimeShaderBuilder = compositeShaderBuilder,
-                            shaderNames = arrayOf("content", "blurred"),
-                            inputs = arrayOf(null, blurImageFilter)
+                            shaderNames = arrayOf("content"),
+                            inputs = arrayOf(null)
                         ).asComposeRenderEffect(),
                     )
                 )
