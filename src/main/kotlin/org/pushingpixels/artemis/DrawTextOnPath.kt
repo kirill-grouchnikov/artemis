@@ -43,6 +43,7 @@ import org.jetbrains.skia.*
 fun DrawScope.drawTextOnPath(
     text: String,
     textSize: Dp,
+    isEmboldened: Boolean = false,
     path: androidx.compose.ui.graphics.Path,
     offset: Offset,
     textAlign: TextAlign = TextAlign.Center,
@@ -54,6 +55,7 @@ fun DrawScope.drawTextOnPath(
 
         val skiaFont = Font(Typeface.makeDefault())
         skiaFont.size = textSize.toPx()
+        skiaFont.isEmboldened = isEmboldened
 
         // Get string glyphs, and compute the width and position of each glyph in the string
         val glyphs = skiaFont.getStringGlyphs(text)
