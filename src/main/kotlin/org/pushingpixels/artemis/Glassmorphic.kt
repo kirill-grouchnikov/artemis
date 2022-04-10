@@ -51,7 +51,6 @@ fun main() = application {
             // Recreate visuals from https://uxmisfit.com/2021/01/13/how-to-create-glassmorphic-card-ui-design/
             val compositeSksl = """
                 uniform shader content;
-                uniform colorFilter filter;
                 uniform shader blur;
                 uniform shader noise;
                 
