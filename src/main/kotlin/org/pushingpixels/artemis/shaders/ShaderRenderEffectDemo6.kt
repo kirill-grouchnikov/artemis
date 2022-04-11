@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.rememberWindowState
+import org.intellij.lang.annotations.Language
 import org.jetbrains.skia.*
 import org.jetbrains.skia.Shader
 import org.pushingpixels.aurora.component.model.Command
@@ -42,6 +43,7 @@ fun main() = auroraApplication {
 
     val skin = mutableStateOf(mistSilverSkin())
 
+    @Language("GLSL")
     val compositeSksl = """
         uniform shader content;
         uniform shader gradient;

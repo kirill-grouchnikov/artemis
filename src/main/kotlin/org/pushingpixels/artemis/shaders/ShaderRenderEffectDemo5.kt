@@ -41,6 +41,7 @@ import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.rememberWindowState
 import kotlinx.coroutines.launch
+import org.intellij.lang.annotations.Language
 import org.jetbrains.skia.ImageFilter
 import org.jetbrains.skia.RuntimeEffect
 import org.jetbrains.skia.RuntimeShaderBuilder
@@ -63,6 +64,7 @@ fun main() = auroraApplication {
 
     val skin = mutableStateOf(graphiteGoldSkin())
 
+    @Language("GLSL")
     val glowSksl = """
         uniform shader content;
         uniform float width;

@@ -34,6 +34,7 @@ import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.rememberWindowState
 import kotlinx.coroutines.launch
+import org.intellij.lang.annotations.Language
 import org.jetbrains.skia.FilterTileMode
 import org.jetbrains.skia.ImageFilter
 import org.jetbrains.skia.RuntimeEffect
@@ -57,6 +58,7 @@ fun main() = auroraApplication {
 
     val skin = mutableStateOf(businessSkin())
 
+    @Language("GLSL")
     val compositeSksl = """
         uniform shader content;
         uniform shader blurred;

@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.rememberWindowState
+import org.intellij.lang.annotations.Language
 import org.jetbrains.skia.*
 import org.pushingpixels.aurora.component.model.Command
 import org.pushingpixels.aurora.component.projection.CommandButtonProjection
@@ -45,14 +46,15 @@ fun main() = auroraApplication {
 
     val skin = mutableStateOf(mistSilverSkin())
 
+    @Language("GLSL")
     val compositeSksl = """
         uniform shader content;
-        uniform colorFilter filter;
+        uniform colorFilter myFilter;
         uniform float cutoff;
         
         vec4 main(vec2 coord) {
             vec4 c = content.eval(coord);
-            vec4 b = filter.eval(c);
+            vec4 b = myFilter.eval(c);
             if (coord.x > cutoff) {
                 return vec4(1.0 * c.a, c.g * c.a, c.b * c.a, c.a);
             } else {
@@ -65,7 +67,7 @@ fun main() = auroraApplication {
     val compositeShaderBuilder = RuntimeShaderBuilder(compositeRuntimeEffect)
     compositeShaderBuilder.uniform("cutoff", 100.0f)
     compositeShaderBuilder.child(
-        "filter",
+        "myFilter",
         ColorFilter.makeHighContrast(grayscale = false, mode = InversionMode.BRIGHTNESS, contrast = 0.7f)
     )
 

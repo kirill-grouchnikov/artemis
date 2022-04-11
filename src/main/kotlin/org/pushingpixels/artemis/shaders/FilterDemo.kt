@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.rememberWindowState
+import org.intellij.lang.annotations.Language
 import org.jetbrains.skia.Data
 import org.jetbrains.skia.RuntimeEffect
 import org.jetbrains.skia.Shader
@@ -135,6 +136,7 @@ fun getNoiseShader(
     )
 
     // Duotone shader
+    @Language("GLSL")
     val duotoneDesc = """
             uniform shader shaderInput;
             uniform vec4 colorLight;
@@ -145,7 +147,7 @@ fun getNoiseShader(
                 vec4 inputColor = shaderInput.eval(fragcoord);
                 float luma = dot(inputColor.rgb, vec3(0.299, 0.587, 0.114));
                 vec4 duotone = mix(colorLight, colorDark, luma);
-                return vec4(duotone.r * alpha, duotone.g * alpha, duotone.b * alpha, alpha);
+                return half4(duotone.r * alpha, duotone.g * alpha, duotone.b * alpha, alpha);
             }
         """
 
@@ -184,6 +186,7 @@ fun getBrushedMetalShader(colorLight: Color, colorDark: Color, alpha: Float = 1.
     )
 
     // Brushed metal shader
+    @Language("GLSL")
     val brushedMetalDesc = """
             uniform shader shaderInput;
 

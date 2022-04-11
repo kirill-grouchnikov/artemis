@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.ShaderBrush
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.*
+import org.intellij.lang.annotations.Language
 import org.jetbrains.skia.Data
 import org.jetbrains.skia.RuntimeEffect
 import java.nio.ByteBuffer
@@ -39,6 +40,7 @@ fun main() = application {
         size = DpSize(300.dp, 300.dp)
     )
 
+    @Language("GLSL")
     val sksl = """
             uniform float time;
             

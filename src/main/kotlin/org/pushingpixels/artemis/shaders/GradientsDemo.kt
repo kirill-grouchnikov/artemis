@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.rememberWindowState
+import org.intellij.lang.annotations.Language
 import org.jetbrains.skia.Data
 import org.jetbrains.skia.RuntimeEffect
 import org.pushingpixels.artemis.svg.radiance_menu
@@ -193,6 +194,7 @@ private val LinearSrgbSkiaBrushCreator: (Float, GradientColors) -> Brush =
 
 private val OklabSkiaBrushCreator: (Float, GradientColors) -> Brush =
     { width, colors ->
+        @Language("GLSL")
         val sksl = """
             // https://bottosson.github.io/posts/colorwrong/#what-can-we-do%3F
             vec3 linearSrgbToSrgb(vec3 x) {
@@ -252,7 +254,7 @@ private val OklabSkiaBrushCreator: (Float, GradientColors) -> Brush =
                // Interpolate in Oklab space
                vec3 oklabInterpolated = mix(oklabStart, oklabEnd, fraction);
                // And convert back to SRGB
-               return vec4(linearSrgbToSrgb(oklabToLinearSrgb(oklabInterpolated)), 1.0);
+               return half4(linearSrgbToSrgb(oklabToLinearSrgb(oklabInterpolated)), 1.0);
             }
         """
 
@@ -283,6 +285,7 @@ private val OklabSkiaBrushCreator: (Float, GradientColors) -> Brush =
 
 private val OklabBezierSkiaBrushCreator: (Float, GradientColors) -> Brush =
     { width, colors ->
+        @Language("GLSL")
         val sksl = """
             // https://bottosson.github.io/posts/colorwrong/#what-can-we-do%3F
             vec3 linearSrgbToSrgb(vec3 x) {
@@ -355,7 +358,7 @@ private val OklabBezierSkiaBrushCreator: (Float, GradientColors) -> Brush =
                // Interpolate in Oklab space
                vec3 oklabInterpolated = mix(oklabStart, oklabEnd, fraction);
                // And convert back to SRGB
-               return vec4(linearSrgbToSrgb(oklabToLinearSrgb(oklabInterpolated)), 1.0);
+               return half4(linearSrgbToSrgb(oklabToLinearSrgb(oklabInterpolated)), 1.0);
             }
         """
 

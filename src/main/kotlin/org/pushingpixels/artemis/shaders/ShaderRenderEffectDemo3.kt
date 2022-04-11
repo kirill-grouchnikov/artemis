@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.rememberWindowState
+import org.intellij.lang.annotations.Language
 import org.jetbrains.skia.FilterTileMode
 import org.jetbrains.skia.ImageFilter
 import org.jetbrains.skia.RuntimeEffect
@@ -55,6 +56,7 @@ fun main() = auroraApplication {
     val redRuntimeEffect = RuntimeEffect.makeForShader(redSksl)
     val redShaderBuilder = RuntimeShaderBuilder(redRuntimeEffect)
 
+    @Language("GLSL")
     val compositeSksl = """
         uniform shader content;
         uniform shader blurred;

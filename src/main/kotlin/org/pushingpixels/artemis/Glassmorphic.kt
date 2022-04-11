@@ -31,6 +31,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.*
+import org.intellij.lang.annotations.Language
 import org.jetbrains.skia.*
 import org.jetbrains.skia.Shader
 
@@ -49,6 +50,7 @@ fun main() = application {
     ) {
         Box(modifier = Modifier.fillMaxSize(1.0f).background(Color(0xFF03080D))) {
             // Recreate visuals from https://uxmisfit.com/2021/01/13/how-to-create-glassmorphic-card-ui-design/
+            @Language("GLSL")
             val compositeSksl = """
                 uniform shader content;
                 uniform shader blur;
@@ -87,8 +89,8 @@ fun main() = application {
                     // How far are we from the top-left corner?
                     float lightenFactor = min(1.0, length(coord - rectangle.xy) / (0.85 * length(rectangle.zw - rectangle.xy)));
                     // Add some noise for extra texture
-                    float noiseLuma = dot(n.rgb, vec3(0.299, 0.587, 0.114));
-                    lightenFactor = min(1.0, lightenFactor + noiseLuma);
+                    float noiseLuminance = dot(n.rgb, vec3(0.2126, 0.7152, 0.0722));
+                    lightenFactor = min(1.0, lightenFactor + noiseLuminance);
                     return b + (vec4(1.0) - b) * (0.35 - 0.25 * lightenFactor);
                 }
             """

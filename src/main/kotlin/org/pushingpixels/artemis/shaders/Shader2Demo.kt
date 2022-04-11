@@ -29,6 +29,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.*
+import org.intellij.lang.annotations.Language
 import org.jetbrains.skia.*
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
@@ -40,6 +41,7 @@ fun main() = application {
         size = DpSize(300.dp, 300.dp)
     )
 
+    @Language("GLSL")
     val sksl = """
             uniform float time;
 
@@ -112,7 +114,7 @@ fun main() = application {
                                 sin((-plasma+.4)+time),
                                 sin((-plasma+.5)+time));
             
-                return vec4(col,1.0);
+                return half4(col,1.0);
             }
         """
 
