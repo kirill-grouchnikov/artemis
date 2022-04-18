@@ -59,6 +59,8 @@ fun main() = application {
                 uniform vec4 rectangle;
                 uniform float radius;
                 
+                uniform float dropShadowSize;
+                
                 // Simplified version of SDF (signed distance function) for a rounded box
                 // from https://www.iquilezles.org/www/articles/distfunctions2d/distfunctions2d.htm
                 float roundedRectangleSDF(vec2 position, vec2 box, float radius) {
@@ -75,9 +77,9 @@ fun main() = application {
                     vec4 c = content.eval(coord);
                     if (distanceToClosestEdge > 0.0) {
                         // We're outside of the filtered area
-                        if (distanceToClosestEdge < 30.0) {
+                        if (distanceToClosestEdge < dropShadowSize) {
                             // Emulate drop shadow around the filtered area
-                            float darkenFactor = (30.0 - distanceToClosestEdge) / 30.0;
+                            float darkenFactor = (dropShadowSize - distanceToClosestEdge) / dropShadowSize;
                             darkenFactor = pow(darkenFactor, 1.6);
                             return c * (0.9 + (1.0 - darkenFactor) / 10.0);
                         }
@@ -112,6 +114,7 @@ fun main() = application {
                     seed = 2.0f
                 )
             )
+            compositeShaderBuilder.uniform("dropShadowSize", 15.0f * density)
 
             Canvas(
                 modifier = Modifier.fillMaxSize(1.0f)
