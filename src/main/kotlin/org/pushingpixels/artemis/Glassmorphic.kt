@@ -80,7 +80,9 @@ fun main() = application {
                         if (distanceToClosestEdge < dropShadowSize) {
                             // Emulate drop shadow around the filtered area
                             float darkenFactor = (dropShadowSize - distanceToClosestEdge) / dropShadowSize;
+                            // Use exponential drop shadow decay for more pleasant visuals
                             darkenFactor = pow(darkenFactor, 1.6);
+                            // Shift towards black, by 10% around the edge, dissipating to 0% further away
                             return c * (0.9 + (1.0 - darkenFactor) / 10.0);
                         }
                         return c;
@@ -93,6 +95,7 @@ fun main() = application {
                     // Add some noise for extra texture
                     float noiseLuminance = dot(n.rgb, vec3(0.2126, 0.7152, 0.0722));
                     lightenFactor = min(1.0, lightenFactor + noiseLuminance);
+                    // Shift towards white, by 35% in top left corner, down to 10% in bottom right corner
                     return b + (vec4(1.0) - b) * (0.35 - 0.25 * lightenFactor);
                 }
             """
