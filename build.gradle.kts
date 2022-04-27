@@ -22,7 +22,7 @@ buildscript {
     dependencies {
         classpath("org.jetbrains.compose:compose-gradle-plugin:1.1.1")
         classpath(kotlin("gradle-plugin", version = "1.6.21"))
-        classpath("org.pushing-pixels:aurora-tools-svg-transcoder-gradle-plugin:1.1.0")
+        classpath("org.pushing-pixels:aurora-tools-svg-transcoder-gradle-plugin:1.2-SNAPSHOT")
     }
 }
 
