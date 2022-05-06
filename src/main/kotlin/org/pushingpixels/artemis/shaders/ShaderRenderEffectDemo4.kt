@@ -105,7 +105,7 @@ fun main() = auroraApplication {
         compositeShaderBuilder.uniform("redness", redness.value)
 
         // The amount of blur is the inverse of the hover amount (full blur when there
-        // is no hover, no blue on hover). Note that hover amount 0.0f cause null pointer
+        // is no hover, no blur on hover). Note that hover amount 0.0f cause null pointer
         // to be thrown from Skia, so for now no blur is actually 0.1f blur.
         val blurAmount = derivedStateOf { (1.0f - hoverAmount.value) * 2.0f + 0.1f }
         val blurImageFilter: ImageFilter = ImageFilter.makeBlur(
