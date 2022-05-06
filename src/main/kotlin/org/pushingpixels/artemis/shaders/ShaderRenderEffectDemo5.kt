@@ -31,7 +31,7 @@ import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.asComposeRenderEffect
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.DpSize
@@ -194,9 +194,9 @@ fun main() = auroraApplication {
                                 )
                             }
                         }
-                    ).onGloballyPositioned {
-                        buttonWidth.value = it.size.width.toFloat()
-                        buttonHeight.value = it.size.height.toFloat()
+                    ).onSizeChanged {
+                        buttonWidth.value = it.width.toFloat()
+                        buttonHeight.value = it.height.toFloat()
                     }
                 )
             }

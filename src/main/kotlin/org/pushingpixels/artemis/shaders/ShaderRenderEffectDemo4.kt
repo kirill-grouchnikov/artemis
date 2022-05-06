@@ -27,7 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asComposeRenderEffect
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowPlacement
@@ -144,8 +144,8 @@ fun main() = auroraApplication {
                             shaderNames = arrayOf("content", "blurred"),
                             inputs = arrayOf(null, blurImageFilter)
                         ).asComposeRenderEffect()
-                    ).onGloballyPositioned {
-                        buttonWidth.value = it.size.width.toFloat()
+                    ).onSizeChanged {
+                        buttonWidth.value = it.width.toFloat()
                     }
                 )
             }
