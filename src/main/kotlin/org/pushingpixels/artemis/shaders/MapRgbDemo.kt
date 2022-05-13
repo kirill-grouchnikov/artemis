@@ -45,6 +45,51 @@ import org.jetbrains.skia.RuntimeShaderBuilder
 import java.awt.Point
 import java.awt.event.MouseEvent
 
+@Language("GLSL")
+private val displaceSksl = """
+    uniform shader content;
+    uniform float width;
+    uniform float height;
+    uniform float intensityAmount;
+    uniform vec2 clickPoint;
+
+    vec4 main(vec2 coord) {
+        vec4 c = content.eval(coord);
+        if (intensityAmount == 0.0) {
+            return c;
+        }
+
+        
+        // How far are we from the focal point?
+        vec2 focalPoint = clickPoint;
+        float relativeToFocal = 
+            min(length(coord - focalPoint) / length(vec2(width, height) / 2.0), 0.4);
+
+        // Emphasize the effect towards the corners, pushing it away from the focal point a bit
+        float weighedDistance = intensityAmount * pow(relativeToFocal, 1.2);
+        
+        // Green channel is from this coordinate
+        float luminanceHere = dot(c.rgb, vec3(0.2126, 0.7152, 0.0722));
+        float green = luminanceHere * c.a;
+        
+        // Blue channel is taken from a pixel further from the focal point
+        vec2 coordForBlue = coord + weighedDistance * 0.1 * (coord - focalPoint);
+        vec4 colorForBlue = content.eval(coordForBlue);
+        float luminanceForBlue = dot(colorForBlue.rgb, vec3(0.2126, 0.7152, 0.0722));
+        float blue = luminanceForBlue * colorForBlue.a;
+        
+        // Red channel is taken from a pixel closer to the focal point
+        vec2 coordForRed = coord - weighedDistance * 0.1 * (coord - focalPoint);
+        vec4 colorForRed = content.eval(coordForRed);
+        float luminanceForRed = dot(colorForRed.rgb, vec3(0.2126, 0.7152, 0.0722));
+        float red = luminanceForRed * colorForRed.a;
+            
+        return vec4(red, green, blue, c.a);
+    }
+"""
+
+private val displaceShaderBuilder = RuntimeShaderBuilder(RuntimeEffect.makeForShader(displaceSksl))
+
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() = application {
     Window(
@@ -59,64 +104,19 @@ fun main() = application {
         val mapSize = remember { mutableStateOf(IntSize(0, 0)) }
         val intensityAmount = remember { Animatable(0.0f) }
         val clickPoint = remember { mutableStateOf(Point()) }
+        val coroutineScope = rememberCoroutineScope()
 
         val density = LocalDensity.current.density
 
-        @Language("GLSL")
-        val displaceSksl = """
-            uniform shader content;
-            uniform float width;
-            uniform float height;
-            uniform float intensityAmount;
-            uniform vec2 clickPoint;
-    
-            vec4 main(vec2 coord) {
-                vec4 c = content.eval(coord);
-                if (intensityAmount == 0.0) {
-                    return c;
-                }
-
-                
-                // How far are we from the focal point?
-                vec2 focalPoint = clickPoint;
-                float relativeToFocal = 
-                    min(length(coord - focalPoint) / length(vec2(width, height) / 2.0), 0.4);
-
-                // Emphasize the effect towards the corners, pushing it away from the focal point a bit
-                float weighedDistance = intensityAmount * pow(relativeToFocal, 1.2);
-                
-                // Green channel is from this coordinate
-                float luminanceHere = dot(c.rgb, vec3(0.2126, 0.7152, 0.0722));
-                float green = luminanceHere * c.a;
-                
-                // Blue channel is taken from a pixel further from the focal point
-                vec2 coordForBlue = coord + weighedDistance * 0.1 * (coord - focalPoint);
-                vec4 colorForBlue = content.eval(coordForBlue);
-                float luminanceForBlue = dot(colorForBlue.rgb, vec3(0.2126, 0.7152, 0.0722));
-                float blue = luminanceForBlue * colorForBlue.a;
-                
-                // Red channel is taken from a pixel closer to the focal point
-                vec2 coordForRed = coord - weighedDistance * 0.1 * (coord - focalPoint);
-                vec4 colorForRed = content.eval(coordForRed);
-                float luminanceForRed = dot(colorForRed.rgb, vec3(0.2126, 0.7152, 0.0722));
-                float red = luminanceForRed * colorForRed.a;
-                    
-                return vec4(red, green, blue, c.a);
-            }
-        """
-
-        val displaceRuntimeEffect = RuntimeEffect.makeForShader(displaceSksl)
-        val displaceShaderBuilder = RuntimeShaderBuilder(displaceRuntimeEffect)
         displaceShaderBuilder.uniform("width", mapSize.value.width.toFloat())
         displaceShaderBuilder.uniform("height", mapSize.value.height.toFloat())
         displaceShaderBuilder.uniform("intensityAmount", intensityAmount.value)
         displaceShaderBuilder.uniform("clickPoint", clickPoint.value.x * density,
             clickPoint.value.y * density)
 
-        val coroutineScope = rememberCoroutineScope()
         Image(
             painter = painterResource("/map/worldmap-small.png"),
-            contentDescription = "Sample",
+            contentDescription = "World Map",
             modifier = Modifier.fillMaxSize()
                 .onSizeChanged { mapSize.value = it }
                 .graphicsLayer(
