@@ -45,6 +45,7 @@ fun main() = auroraApplication {
 
     val skin = mutableStateOf(mistSilverSkin())
 
+    @Language("GLSL")
     val redSksl = """
         uniform shader content;
         vec4 main(vec2 coord) {
