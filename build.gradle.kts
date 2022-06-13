@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.6.21"
-    id("org.jetbrains.compose") version "1.2.0-alpha01-dev675"
+    id("org.jetbrains.compose") version "1.2.0-alpha01-dev709"
     idea
 }
 
@@ -57,12 +57,6 @@ tasks.withType<KotlinCompile> {
 configurations {
     all {
         exclude(group = "org.jetbrains.compose.material", module = "material")
-        resolutionStrategy.eachDependency {
-            if (requested.group == "org.jetbrains.skiko") {
-                useVersion("0.7.18")
-                because("Pin to version that has shader bindings")
-            }
-        }
     }
 }
 
