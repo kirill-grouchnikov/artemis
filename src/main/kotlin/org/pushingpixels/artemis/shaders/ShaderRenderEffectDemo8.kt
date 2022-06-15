@@ -20,7 +20,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asComposeRenderEffect
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.DpSize
@@ -28,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.rememberWindowState
-import org.jetbrains.skia.FilterTileMode
+import org.jetbrains.skia.Color
 import org.jetbrains.skia.ImageFilter
 import org.pushingpixels.aurora.component.model.Command
 import org.pushingpixels.aurora.component.projection.CommandButtonProjection
@@ -54,7 +53,7 @@ fun main() = auroraApplication {
     ) {
         val dropShadowFilter: ImageFilter = ImageFilter.makeDropShadow(
             dx = 0.0f, dy = 4.0f, sigmaX = 12.0f, sigmaY = 12.0f,
-            color = org.jetbrains.skia.Color.makeRGB(r = 0xFF, g = 0x00, b = 0x00)
+            color = Color.makeRGB(r = 0xFF, g = 0x00, b = 0x00)
         )
         val dropShadowEffect = dropShadowFilter.asComposeRenderEffect()
 
