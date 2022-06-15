@@ -54,7 +54,7 @@ fun main() = auroraApplication {
     ) {
         val dropShadowFilter: ImageFilter = ImageFilter.makeDropShadow(
             dx = 0.0f, dy = 4.0f, sigmaX = 12.0f, sigmaY = 12.0f,
-            color = 0xFFFF0000.toInt()
+            color = org.jetbrains.skia.Color.makeRGB(r = 0xFF, g = 0x00, b = 0x00)
         )
         val dropShadowEffect = dropShadowFilter.asComposeRenderEffect()
 
