@@ -212,6 +212,7 @@ fun getBrushedMetalShader(colorLight: Color, colorDark: Color, alpha: Float = 1.
     )
 
     // Duotone shader
+    @Language("GLSL")
     val duotoneDesc = """
             uniform shader shaderInput;
             uniform vec4 colorLight;
