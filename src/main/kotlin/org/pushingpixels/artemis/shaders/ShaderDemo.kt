@@ -73,8 +73,7 @@ fun main() = application {
         val shader = runtimeEffect.makeShader(
             uniforms = Data.makeFromBytes(timeBits),
             children = null,
-            localMatrix = null,
-            isOpaque = false
+            localMatrix = null
         )
         val brush = ShaderBrush(shader)
 

@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.7.10"
-    id("org.jetbrains.compose") version "1.2.0-alpha01-dev764"
+    id("org.jetbrains.compose") version "1.2.0-alpha01-dev770"
     idea
 }
 
@@ -20,7 +20,7 @@ buildscript {
     }
 
     dependencies {
-        classpath("org.jetbrains.compose:compose-gradle-plugin:1.2.0-alpha01-dev764")
+        classpath("org.jetbrains.compose:compose-gradle-plugin:1.2.0-alpha01-dev770")
         classpath(kotlin("gradle-plugin", version = "1.7.10"))
         classpath("org.pushing-pixels:aurora-tools-svg-transcoder-gradle-plugin:1.2-SNAPSHOT")
     }

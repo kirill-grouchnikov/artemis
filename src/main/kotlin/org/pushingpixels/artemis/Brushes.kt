@@ -93,8 +93,7 @@ fun horizontalSrgbGradient(
     val shader = effect.makeShader(
         uniforms = Data.makeFromBytes(dataBuffer.array()),
         children = null,
-        localMatrix = null,
-        isOpaque = false
+        localMatrix = null
     )
 
     return ShaderBrush(shader)

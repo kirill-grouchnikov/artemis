@@ -276,8 +276,7 @@ private val OklabSkiaBrushCreator: (Float, GradientColors) -> Brush =
         val shader = effect.makeShader(
             uniforms = Data.makeFromBytes(dataBuffer.array()),
             children = null,
-            localMatrix = null,
-            isOpaque = false
+            localMatrix = null
         )
 
         ShaderBrush(shader)
@@ -380,8 +379,7 @@ private val OklabBezierSkiaBrushCreator: (Float, GradientColors) -> Brush =
         val shader = effect.makeShader(
             uniforms = Data.makeFromBytes(dataBuffer.array()),
             children = null,
-            localMatrix = null,
-            isOpaque = false
+            localMatrix = null
         )
 
         ShaderBrush(shader)

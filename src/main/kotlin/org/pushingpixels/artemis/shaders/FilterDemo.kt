@@ -169,8 +169,7 @@ fun getNoiseShader(
     val duotoneShader = duotoneEffect.makeShader(
         uniforms = Data.makeFromBytes(duotoneDataBuffer.array()),
         children = arrayOf(noiseShader),
-        localMatrix = null,
-        isOpaque = false
+        localMatrix = null
     )
 
     return duotoneShader
@@ -207,8 +206,7 @@ fun getBrushedMetalShader(colorLight: Color, colorDark: Color, alpha: Float = 1.
     val brushedMetalShader = brushedMetalEffect.makeShader(
         uniforms = null,
         children = arrayOf(noiseShader),
-        localMatrix = null,
-        isOpaque = false
+        localMatrix = null
     )
 
     // Duotone shader
@@ -245,8 +243,7 @@ fun getBrushedMetalShader(colorLight: Color, colorDark: Color, alpha: Float = 1.
     val duotoneShader = duotoneEffect.makeShader(
         uniforms = Data.makeFromBytes(duotoneDataBuffer.array()),
         children = arrayOf(brushedMetalShader),
-        localMatrix = null,
-        isOpaque = false
+        localMatrix = null
     )
 
     return duotoneShader
