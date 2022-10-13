@@ -2,8 +2,8 @@ import org.jetbrains.compose.compose
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.7.10"
-    id("org.jetbrains.compose") version "1.2.0-alpha01-dev770"
+    kotlin("jvm") version "1.7.20"
+    id("org.jetbrains.compose") version "1.2.0"
     idea
 }
 
@@ -20,9 +20,9 @@ buildscript {
     }
 
     dependencies {
-        classpath("org.jetbrains.compose:compose-gradle-plugin:1.2.0-alpha01-dev770")
-        classpath(kotlin("gradle-plugin", version = "1.7.10"))
-        classpath("org.pushing-pixels:aurora-tools-svg-transcoder-gradle-plugin:1.2-SNAPSHOT")
+        classpath("org.jetbrains.compose:compose-gradle-plugin:1.2.0")
+        classpath(kotlin("gradle-plugin", version = "1.7.20"))
+        classpath("org.pushing-pixels:aurora-tools-svg-transcoder-gradle-plugin:1.2.0")
     }
 }
 
@@ -37,9 +37,9 @@ dependencies {
     implementation(compose.desktop.currentOs)
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
-    implementation("org.pushing-pixels:aurora-theming:1.2-SNAPSHOT")
-    implementation("org.pushing-pixels:aurora-component:1.2-SNAPSHOT")
-    implementation("org.pushing-pixels:aurora-window:1.2-SNAPSHOT")
+    implementation("org.pushing-pixels:aurora-theming:1.2.0")
+    implementation("org.pushing-pixels:aurora-component:1.2.0")
+    implementation("org.pushing-pixels:aurora-window:1.2.0")
 }
 
 tasks.register<org.pushingpixels.aurora.tools.svgtranscoder.gradle.TranscodeTask>("transcodeSingle") {
