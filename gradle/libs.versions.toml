@@ -1,0 +1,18 @@
+[versions]
+kotlin = "1.7.20"
+compose = "1.2.0"
+aurora = "1.2.0"
+retrofit = "2.9.0"
+
+[libraries]
+compose-desktop = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "compose" }
+kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+
+retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+retrofit-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
+
+aurora-theming = { module = "org.pushing-pixels:aurora-theming", version.ref = "aurora" }
+aurora-component = { module = "org.pushing-pixels:aurora-component", version.ref = "aurora" }
+aurora-window = { module = "org.pushing-pixels:aurora-window", version.ref = "aurora" }
+aurora-svgtranscoder-gradlePlugin = { module = "org.pushing-pixels:aurora-tools-svg-transcoder-gradle-plugin", version.ref = "aurora" }
+
