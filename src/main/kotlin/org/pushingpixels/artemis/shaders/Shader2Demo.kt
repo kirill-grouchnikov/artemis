@@ -15,6 +15,7 @@
  */
 package org.pushingpixels.artemis.shaders
 
+import androidx.compose.animation.core.withInfiniteAnimationFrameNanos
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.*
@@ -121,15 +122,22 @@ fun main() = application {
     val runtimeEffect = RuntimeEffect.makeForShader(sksl)
     val shaderPaint = remember { Paint() }
     val byteBuffer = remember { ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN) }
-    var timeUniform by remember { mutableStateOf(0.0f) }
-    var previousNanos by remember { mutableStateOf(0L) }
 
     Window(
         title = "Compose / Skia shader demo",
         state = state,
         onCloseRequest = ::exitApplication,
     ) {
-        val timeBits = (byteBuffer.clear() as ByteBuffer).putFloat(timeUniform).array()
+        val startNanos = remember { System.nanoTime() }
+        val time by produceState(0f) {
+            while (true) {
+                withInfiniteAnimationFrameNanos {
+                    value = (startNanos - it) / 500000000f
+                }
+            }
+        }
+
+        val timeBits = (byteBuffer.clear() as ByteBuffer).putFloat(time).array()
         val shader = runtimeEffect.makeShader(
             uniforms = Data.makeFromBytes(timeBits),
             children = null,
@@ -151,19 +159,6 @@ fun main() = application {
                 }
             }
         }))
-
-        LaunchedEffect(null) {
-            while (true) {
-                withFrameNanos { frameTimeNanos ->
-                    val nanosPassed = frameTimeNanos - previousNanos
-                    val delta = nanosPassed / 500000000f
-                    if (previousNanos > 0.0f) {
-                        timeUniform -= delta
-                    }
-                    previousNanos = frameTimeNanos
-                }
-            }
-        }
     }
 }
 
