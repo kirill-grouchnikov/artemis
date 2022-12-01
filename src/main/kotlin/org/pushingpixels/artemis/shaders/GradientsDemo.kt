@@ -16,9 +16,7 @@
 package org.pushingpixels.artemis.shaders
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
@@ -39,8 +37,8 @@ import androidx.compose.ui.window.rememberWindowState
 import org.intellij.lang.annotations.Language
 import org.jetbrains.skia.Data
 import org.jetbrains.skia.RuntimeEffect
-import org.pushingpixels.artemis.svg.radiance_menu
 import org.pushingpixels.artemis.horizontalSrgbGradient
+import org.pushingpixels.artemis.svg.radiance_menu
 import org.pushingpixels.aurora.component.model.LabelContentModel
 import org.pushingpixels.aurora.component.model.LabelPresentationModel
 import org.pushingpixels.aurora.component.model.SelectorContentModel
@@ -50,6 +48,7 @@ import org.pushingpixels.aurora.theming.IconFilterStrategy
 import org.pushingpixels.aurora.theming.businessSkin
 import org.pushingpixels.aurora.theming.resolveAuroraDefaults
 import org.pushingpixels.aurora.window.AuroraWindow
+import org.pushingpixels.aurora.window.AuroraWindowTitlePaneConfigurations
 import org.pushingpixels.aurora.window.auroraApplication
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
@@ -61,27 +60,26 @@ fun main() = auroraApplication {
         position = WindowPosition.Aligned(Alignment.Center),
         size = DpSize(900.dp, 800.dp)
     )
-    val skin = mutableStateOf(businessSkin())
 
     AuroraWindow(
-        skin = skin,
+        skin = businessSkin(),
         title = "Gradients Demo",
         icon = radiance_menu(),
         iconFilterStrategy = IconFilterStrategy.ThemedFollowText,
         state = state,
-        undecorated = true,
+        windowTitlePaneConfiguration = AuroraWindowTitlePaneConfigurations.AuroraPlain(),
         onCloseRequest = ::exitApplication,
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
-            val groupByColor = remember { mutableStateOf(true) }
+            var groupByColor by remember { mutableStateOf(true) }
 
             CheckBoxProjection(contentModel = SelectorContentModel(
                 text = "Group by color",
-                selected = groupByColor.value,
-                onTriggerSelectedChange = { groupByColor.value = it }
+                selected = groupByColor,
+                onClick = { groupByColor = !groupByColor }
             )).project(modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp))
 
-            if (groupByColor.value) {
+            if (groupByColor) {
                 Row(modifier = Modifier.weight(1.0f)) {
                     GradientSectionByColor(
                         modifier = Modifier.weight(1.0f, fill = true),

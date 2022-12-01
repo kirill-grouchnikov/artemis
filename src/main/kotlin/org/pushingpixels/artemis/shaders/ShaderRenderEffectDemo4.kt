@@ -47,6 +47,7 @@ import org.pushingpixels.aurora.component.projection.SliderProjection
 import org.pushingpixels.aurora.theming.AuroraSkin
 import org.pushingpixels.aurora.theming.businessSkin
 import org.pushingpixels.aurora.window.AuroraWindow
+import org.pushingpixels.aurora.window.AuroraWindowTitlePaneConfigurations
 import org.pushingpixels.aurora.window.auroraApplication
 
 fun main() = auroraApplication {
@@ -55,8 +56,6 @@ fun main() = auroraApplication {
         position = WindowPosition.Aligned(Alignment.Center),
         size = DpSize(300.dp, 200.dp)
     )
-
-    val skin = mutableStateOf(businessSkin())
 
     @Language("GLSL")
     val compositeSksl = """
@@ -81,10 +80,10 @@ fun main() = auroraApplication {
     val compositeRuntimeEffect = RuntimeEffect.makeForShader(compositeSksl)
 
     AuroraWindow(
-        skin = skin,
+        skin = businessSkin(),
         title = "Filter Demo",
         state = state,
-        undecorated = true,
+        windowTitlePaneConfiguration = AuroraWindowTitlePaneConfigurations.AuroraPlain(),
         onCloseRequest = ::exitApplication,
     ) {
         val tweenSpec = tween<Float>(durationMillis = AuroraSkin.animationConfig.regular, easing = FastOutSlowInEasing)

@@ -35,6 +35,7 @@ import org.pushingpixels.aurora.component.model.CommandActionPreview
 import org.pushingpixels.aurora.component.projection.CommandButtonProjection
 import org.pushingpixels.aurora.theming.businessSkin
 import org.pushingpixels.aurora.window.AuroraWindow
+import org.pushingpixels.aurora.window.AuroraWindowTitlePaneConfigurations
 import org.pushingpixels.aurora.window.auroraApplication
 
 fun main() = auroraApplication {
@@ -44,13 +45,11 @@ fun main() = auroraApplication {
         size = DpSize(300.dp, 120.dp)
     )
 
-    val skin = mutableStateOf(businessSkin())
-
     AuroraWindow(
-        skin = skin,
+        skin = businessSkin(),
         title = "Filter Demo",
         state = state,
-        undecorated = true,
+        windowTitlePaneConfiguration = AuroraWindowTitlePaneConfigurations.AuroraPlain(),
         onCloseRequest = ::exitApplication,
     ) {
 

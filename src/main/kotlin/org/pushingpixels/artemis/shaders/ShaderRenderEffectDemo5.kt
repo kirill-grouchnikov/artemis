@@ -48,11 +48,9 @@ import org.jetbrains.skia.RuntimeShaderBuilder
 import org.pushingpixels.aurora.component.model.Command
 import org.pushingpixels.aurora.component.model.CommandActionPreview
 import org.pushingpixels.aurora.component.projection.CommandButtonProjection
-import org.pushingpixels.aurora.theming.AuroraSkin
-import org.pushingpixels.aurora.theming.ColorSchemeAssociationKind
-import org.pushingpixels.aurora.theming.ComponentState
-import org.pushingpixels.aurora.theming.graphiteGoldSkin
+import org.pushingpixels.aurora.theming.*
 import org.pushingpixels.aurora.window.AuroraWindow
+import org.pushingpixels.aurora.window.AuroraWindowTitlePaneConfigurations
 import org.pushingpixels.aurora.window.auroraApplication
 
 fun main() = auroraApplication {
@@ -61,8 +59,6 @@ fun main() = auroraApplication {
         position = WindowPosition.Aligned(Alignment.Center),
         size = DpSize(300.dp, 120.dp)
     )
-
-    val skin = mutableStateOf(graphiteGoldSkin())
 
     @Language("GLSL")
     val glowSksl = """
@@ -108,10 +104,10 @@ fun main() = auroraApplication {
     val glowRuntimeEffect = RuntimeEffect.makeForShader(glowSksl)
 
     AuroraWindow(
-        skin = skin,
+        skin = graphiteGoldSkin(),
         title = "Filter Demo",
         state = state,
-        undecorated = true,
+        windowTitlePaneConfiguration = AuroraWindowTitlePaneConfigurations.AuroraPlain(),
         onCloseRequest = ::exitApplication,
     ) {
         val tweenSpec = tween<Float>(durationMillis = AuroraSkin.animationConfig.regular, easing = FastOutSlowInEasing)

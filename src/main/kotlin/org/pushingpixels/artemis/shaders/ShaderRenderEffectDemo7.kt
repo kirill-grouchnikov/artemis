@@ -19,7 +19,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asComposeRenderEffect
@@ -35,6 +34,7 @@ import org.pushingpixels.aurora.component.model.Command
 import org.pushingpixels.aurora.component.projection.CommandButtonProjection
 import org.pushingpixels.aurora.theming.mistSilverSkin
 import org.pushingpixels.aurora.window.AuroraWindow
+import org.pushingpixels.aurora.window.AuroraWindowTitlePaneConfigurations
 import org.pushingpixels.aurora.window.auroraApplication
 
 fun main() = auroraApplication {
@@ -43,8 +43,6 @@ fun main() = auroraApplication {
         position = WindowPosition.Aligned(Alignment.Center),
         size = DpSize(300.dp, 300.dp)
     )
-
-    val skin = mutableStateOf(mistSilverSkin())
 
     @Language("GLSL")
     val compositeSksl = """
@@ -72,10 +70,10 @@ fun main() = auroraApplication {
     )
 
     AuroraWindow(
-        skin = skin,
+        skin = mistSilverSkin(),
         title = "Filter Demo",
         state = state,
-        undecorated = true,
+        windowTitlePaneConfiguration = AuroraWindowTitlePaneConfigurations.AuroraPlain(),
         onCloseRequest = ::exitApplication,
     ) {
         Box(modifier = Modifier.fillMaxSize()) {

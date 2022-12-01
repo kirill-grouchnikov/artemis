@@ -40,6 +40,7 @@ import org.pushingpixels.aurora.theming.businessSkin
 import org.pushingpixels.aurora.theming.colorscheme.MetallicColorScheme
 import org.pushingpixels.aurora.theming.colorscheme.OrangeColorScheme
 import org.pushingpixels.aurora.window.AuroraWindow
+import org.pushingpixels.aurora.window.AuroraWindowTitlePaneConfigurations
 import org.pushingpixels.aurora.window.auroraApplication
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
@@ -50,13 +51,12 @@ fun main() = auroraApplication {
         position = WindowPosition.Aligned(Alignment.Center),
         size = DpSize(800.dp, 600.dp)
     )
-    val skin = mutableStateOf(businessSkin())
 
     AuroraWindow(
-        skin = skin,
+        skin = businessSkin(),
         title = "Filter Demo",
         state = state,
-        undecorated = true,
+        windowTitlePaneConfiguration = AuroraWindowTitlePaneConfigurations.AuroraPlain(),
         onCloseRequest = ::exitApplication,
     ) {
         val metallic = MetallicColorScheme()
@@ -221,7 +221,7 @@ fun getBrushedMetalShader(colorLight: Color, colorDark: Color, alpha: Float = 1.
                 vec4 inputColor = shaderInput.eval(fragcoord);
                 float luma = dot(inputColor.rgb, vec3(0.299, 0.587, 0.114));
                 vec4 duotone = mix(colorLight, colorDark, luma);
-                return vec4(duotone.r * alpha, duotone.g * alpha, duotone.b * alpha, alpha);
+                return half4(duotone.r * alpha, duotone.g * alpha, duotone.b * alpha, alpha);
             }
         """
 
