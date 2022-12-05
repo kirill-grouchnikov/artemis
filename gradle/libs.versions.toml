@@ -3,6 +3,7 @@ kotlin = "1.7.20"
 compose = "1.2.1"
 aurora = "1.3.0"
 retrofit = "2.9.0"
+versionchecker = "0.44.0"
 
 [libraries]
 compose-desktop = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "compose" }
@@ -16,3 +17,4 @@ aurora-component = { module = "org.pushing-pixels:aurora-component", version.ref
 aurora-window = { module = "org.pushing-pixels:aurora-window", version.ref = "aurora" }
 aurora-svgtranscoder-gradlePlugin = { module = "org.pushing-pixels:aurora-tools-svg-transcoder-gradle-plugin", version.ref = "aurora" }
 
+versionchecker-gradlePlugin = { module = "com.github.ben-manes:gradle-versions-plugin", version.ref = "versionchecker" }

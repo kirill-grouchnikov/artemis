@@ -21,8 +21,8 @@ buildscript {
     dependencies {
         classpath(libs.compose.desktop)
         classpath(libs.kotlin.gradlePlugin)
-        classpath(libs.kotlin.gradlePlugin)
         classpath(libs.aurora.svgtranscoder.gradlePlugin)
+        classpath(libs.versionchecker.gradlePlugin)
     }
 }
 
@@ -76,3 +76,7 @@ idea {
         generatedSourceDirs.add(file("$rootDir/src/gen/kotlin"))
     }
 }
+
+// To generate report about available dependency updates, run
+// ./gradlew dependencyUpdates
+apply(plugin = "com.github.ben-manes.versions")
