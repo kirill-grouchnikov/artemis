@@ -39,6 +39,7 @@ import org.jetbrains.skia.FilterTileMode
 import org.jetbrains.skia.ImageFilter
 import org.jetbrains.skia.RuntimeEffect
 import org.jetbrains.skia.RuntimeShaderBuilder
+import org.pushingpixels.aurora.component.model.BaseCommand
 import org.pushingpixels.aurora.component.model.Command
 import org.pushingpixels.aurora.component.model.CommandActionPreview
 import org.pushingpixels.aurora.component.model.SliderContentModel
@@ -124,13 +125,13 @@ fun main() = auroraApplication {
                 CommandButtonProjection(
                     contentModel = Command(text = "Click me 2!", action = { println("Clicked!") },
                         actionPreview = object : CommandActionPreview {
-                            override fun onCommandPreviewActivated(command: Command) {
+                            override fun onCommandPreviewActivated(command: BaseCommand) {
                                 coroutineScope.launch {
                                     hoverAmount.animateTo(targetValue = 1.0f, animationSpec = tweenSpec)
                                 }
                             }
 
-                            override fun onCommandPreviewCanceled(command: Command) {
+                            override fun onCommandPreviewCanceled(command: BaseCommand) {
                                 coroutineScope.launch {
                                     hoverAmount.animateTo(targetValue = 0.0f, animationSpec = tweenSpec)
                                 }

@@ -30,6 +30,7 @@ import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.rememberWindowState
 import kotlinx.coroutines.launch
 import org.jetbrains.skia.*
+import org.pushingpixels.aurora.component.model.BaseCommand
 import org.pushingpixels.aurora.component.model.Command
 import org.pushingpixels.aurora.component.model.CommandActionPreview
 import org.pushingpixels.aurora.component.projection.CommandButtonProjection
@@ -66,7 +67,7 @@ fun main() = auroraApplication {
             CommandButtonProjection(
                 contentModel = Command(text = "Click me!", action = { println("Clicked!") },
                     actionPreview = object : CommandActionPreview {
-                        override fun onCommandPreviewActivated(command: Command) {
+                        override fun onCommandPreviewActivated(command: BaseCommand) {
                             coroutineScope.launch {
                                 blurAmount.animateTo(
                                     targetValue = 0.1f,
@@ -75,7 +76,7 @@ fun main() = auroraApplication {
                             }
                         }
 
-                        override fun onCommandPreviewCanceled(command: Command) {
+                        override fun onCommandPreviewCanceled(command: BaseCommand) {
                             coroutineScope.launch {
                                 blurAmount.animateTo(
                                     targetValue = 3.0f,
