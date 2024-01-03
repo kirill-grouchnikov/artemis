@@ -1,9 +1,9 @@
 [versions]
-kotlin = "1.9.20"
-compose = "1.5.10"
+kotlin = "1.9.21"
+compose = "1.5.11"
 aurora = "2.0-SNAPSHOT"
 retrofit = "2.9.0"
-versionchecker = "0.49.0"
+versionchecker = "0.50.0"
 
 [libraries]
 compose-desktop = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "compose" }

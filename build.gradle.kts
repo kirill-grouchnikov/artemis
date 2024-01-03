@@ -1,8 +1,8 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.9.20"
-    id("org.jetbrains.compose") version "1.5.10"
+    kotlin("jvm") version "1.9.21"
+    id("org.jetbrains.compose") version "1.5.11"
     idea
 }
 
