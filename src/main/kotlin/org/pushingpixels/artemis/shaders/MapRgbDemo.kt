@@ -58,7 +58,6 @@ private val displaceSksl = """
         if (intensityAmount == 0.0) {
             return c;
         }
-
         
         // How far are we from the focal point?
         vec2 focalPoint = clickPoint;
