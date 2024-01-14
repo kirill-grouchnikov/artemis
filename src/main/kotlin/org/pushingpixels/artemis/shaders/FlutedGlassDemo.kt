@@ -40,27 +40,25 @@ import org.jetbrains.skia.RuntimeShaderBuilder
 @Language("GLSL")
 private val flutedGlassSksl = """
     uniform shader content;
-    uniform shader blur1;
-    uniform shader blur2;
+    uniform shader mainBlur;
+    uniform shader haloBlur;
     uniform float width;
     uniform float height;
 
     vec4 main(vec2 coord) {
-        vec4 c = content.eval(coord);
-        vec4 b1 = blur1.eval(coord);
-        vec4 b2 = blur2.eval(coord);
-        float intensifiedBlackBlurAlpha = 1.0 - pow(1.0 - b1.a, 5.0);
-        vec4 intensifiedBlackBlur = vec4(b1.r, b1.g, b1.b, intensifiedBlackBlurAlpha); 
-        vec4 originalWithBlur = (c.a == 1.0) ? c : intensifiedBlackBlur;
+        vec4 blurColor = mainBlur.eval(coord);
+        vec4 haloColor = haloBlur.eval(coord);
+        float intensifiedBlackBlurAlpha = 1.0 - pow(1.0 - blurColor.a, 5.0);
+        vec4 intensifiedBlackBlur = vec4(blurColor.r, blurColor.g, blurColor.b, intensifiedBlackBlurAlpha); 
 
         if (fract(coord.x / 16.0) <= 0.25) {
-            return mix(vec4(0.88, 0.88, 0.88, 1.0), vec4(0.38, 0.38, 0.38, 1.0), originalWithBlur.a);
+            return mix(vec4(0.88, 0.88, 0.88, 1.0), vec4(0.28, 0.28, 0.28, 1.0), intensifiedBlackBlur.a);
         }
         
+        float offsetFromCenter = abs(0.625 - fract(coord.x / 16.0));
         bool isLeft = (fract(coord.x / 16.0) <= 0.5);
-        bool isMiddle = !isLeft && (fract(coord.x / 16.0) <= 0.75);
+        bool isMiddle = (offsetFromCenter <= 0.125);
         bool isRight = !isLeft && !isMiddle;
-        
         
         vec3 purple = vec3(122.0, 103.0, 223.0);
         vec3 brown = vec3(152.0, 75.0, 45.0);
@@ -69,30 +67,20 @@ private val flutedGlassSksl = """
         float mixRed = mix(purple.r, brown.r, mixAmount) / 255.0;
         float mixGreen = mix(purple.g, brown.g, mixAmount) / 255.0;
         float mixBlue = mix(purple.b, brown.b, mixAmount) / 255.0;
-        float intensifiedMixAlpha = 1.0 - pow(1.0 - b2.a, 3.0);
+        float intensifiedMixAlpha = 1.0 - pow(1.0 - haloColor.a, 3.0);
         vec4 mixed = vec4(mixRed, mixGreen, mixBlue, intensifiedMixAlpha);
         
-        float red = min(c.x, b1.x);
-        float green = min(c.y, b1.y);
-        float blue = min(c.z, b1.z);
-        float alpha = max(c.a, b1.a);
-
-        vec4 allMixed = mix(mixed, originalWithBlur, originalWithBlur.a);
-        // Mixed color blur blends into the original + blur
+        vec4 allMixed = mix(mixed, intensifiedBlackBlur, intensifiedBlackBlur.a);
+        // Halo color blur blends into the main blur
         float blendAmount = min(allMixed.a + intensifiedBlackBlurAlpha, 1.0);
-        vec4 finalMixed = mix(mixed, allMixed, originalWithBlur.a);
+        vec4 finalMixed = mix(mixed, allMixed, intensifiedBlackBlur.a);
 
-        if (isLeft) {
-            float alpha = pow(intensifiedBlackBlur.a, 1.9);
-            return vec4(finalMixed.r, finalMixed.g, finalMixed.b, alpha);
+        if (isMiddle) {
+            return finalMixed;
         }
-        if (isRight) {
-            float alpha = pow(intensifiedBlackBlur.a, 1.3);//
-            return vec4(finalMixed.r, finalMixed.g, finalMixed.b, alpha);
-        }
-        
-        // Middle
-        return finalMixed;
+        // Sides, extend the original blur based on the X offset from the band center
+        float alpha = pow(intensifiedBlackBlur.a, 0.8 + offsetFromCenter);
+        return vec4(finalMixed.r, finalMixed.g, finalMixed.b, alpha);
     }
 """
 
@@ -114,7 +102,7 @@ fun main() = application {
         flutedGlassBuilder.uniform("height", imageSize.value.height.toFloat())
 
         Image(
-            painter = painterResource("/icon/blur-icon.png"),
+            painter = painterResource("/icon/reduce_capacity_200.png"),
             contentDescription = "Icon",
             modifier = Modifier.fillMaxSize()
                 .background(Color.LightGray)
@@ -122,11 +110,11 @@ fun main() = application {
                 .graphicsLayer(
                     renderEffect = ImageFilter.makeRuntimeShader(
                         runtimeShaderBuilder = flutedGlassBuilder,
-                        shaderNames = arrayOf("content", "blur1", "blur2"),
+                        shaderNames = arrayOf("content", "mainBlur", "haloBlur"),
                         inputs = arrayOf(
                             null,
                             ImageFilter.makeBlur(
-                                sigmaX = 24.0f, sigmaY = 24.0f, mode = FilterTileMode.DECAL
+                                sigmaX = 20.0f, sigmaY = 20.0f, mode = FilterTileMode.DECAL
                             ),
                             ImageFilter.makeBlur(
                                 sigmaX = 160.0f, sigmaY = 64.0f, mode = FilterTileMode.CLAMP
