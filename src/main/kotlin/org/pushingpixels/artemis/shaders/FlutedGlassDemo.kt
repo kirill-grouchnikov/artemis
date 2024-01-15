@@ -70,11 +70,6 @@ private val flutedGlassSksl = """
         float intensifiedHaloAlpha = 1.0 - pow(1.0 - haloBlurColor.a, 3.0);
         vec4 haloColor = vec4(haloRed, haloGreen, haloBlue, intensifiedHaloAlpha);
         
-        vec4 allMixed = mix(haloColor, intensifiedMainBlur, intensifiedMainBlur.a);
-        // Halo color blur blends into the main blur
-        float blendAmount = min(allMixed.a + intensifiedMainBlurAlpha, 1.0);
-        vec4 finalMixed = mix(haloColor, allMixed, intensifiedMainBlur.a);
-
         if (isMiddle) {
             // Porter-Duff SrcOver, source being the intensified main blue, and destination
             // being the colored halo
@@ -83,6 +78,12 @@ private val flutedGlassSksl = """
             return vec4(middleColor.r, middleColor.g, middleColor.b, middleAlpha);
         }
         // Sides, extend the original blur based on the X offset from the band center
+        vec4 allMixed = mix(haloColor, intensifiedMainBlur, intensifiedMainBlur.a);
+        // Halo color blur blends into the main blur
+        float blendAmount = min(allMixed.a + intensifiedMainBlurAlpha, 1.0);
+        vec4 finalMixed = mix(haloColor, allMixed, intensifiedMainBlur.a);
+        // Tweak the alpha. The sides fade away as they get further from the main blur,
+        // creating an extended "rib" in the center.
         float alpha = pow(intensifiedMainBlur.a, 0.8 + offsetFromCenter);
         return vec4(finalMixed.r, finalMixed.g, finalMixed.b, alpha);
     }
