@@ -47,7 +47,7 @@ private val flutedGlassSksl = """
 
     vec4 main(vec2 coord) {
         vec4 blurColor = mainBlur.eval(coord);
-        vec4 haloColor = haloBlur.eval(coord);
+        vec4 haloBlurColor = haloBlur.eval(coord);
         float intensifiedMainBlurAlpha = 1.0 - pow(1.0 - blurColor.a, 5.0);
         vec4 intensifiedMainBlur = vec4(blurColor.r, blurColor.g, blurColor.b, intensifiedMainBlurAlpha); 
 
@@ -67,7 +67,7 @@ private val flutedGlassSksl = """
         float haloRed = mix(purple.r, brown.r, haloMixAmount) / 255.0;
         float haloGreen = mix(purple.g, brown.g, haloMixAmount) / 255.0;
         float haloBlue = mix(purple.b, brown.b, haloMixAmount) / 255.0;
-        float intensifiedHaloAlpha = 1.0 - pow(1.0 - haloColor.a, 3.0);
+        float intensifiedHaloAlpha = 1.0 - pow(1.0 - haloBlurColor.a, 3.0);
         vec4 haloColor = vec4(haloRed, haloGreen, haloBlue, intensifiedHaloAlpha);
         
         vec4 allMixed = mix(haloColor, intensifiedMainBlur, intensifiedMainBlur.a);
