@@ -76,7 +76,11 @@ private val flutedGlassSksl = """
         vec4 finalMixed = mix(haloColor, allMixed, intensifiedMainBlur.a);
 
         if (isMiddle) {
-            return finalMixed;
+            // Porter-Duff SrcOver, source being the intensified main blue, and destination
+            // being the colored halo
+            vec3 middleColor = intensifiedMainBlur.rgb + (1 - intensifiedMainBlurAlpha) * haloColor.rgb;
+            float middleAlpha = intensifiedMainBlurAlpha + (1 - intensifiedMainBlurAlpha) * haloColor.a;
+            return vec4(middleColor.r, middleColor.g, middleColor.b, middleAlpha);
         }
         // Sides, extend the original blur based on the X offset from the band center
         float alpha = pow(intensifiedMainBlur.a, 0.8 + offsetFromCenter);
