@@ -48,8 +48,10 @@ import androidx.compose.ui.window.*
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
-import okio.Okio
+import okio.buffer
+import okio.source
 import org.jetbrains.skia.Color4f
 import org.jetbrains.skia.Font
 import org.jetbrains.skia.Typeface
@@ -186,13 +188,13 @@ fun main() = application {
     val dataSet = SOURDOUGH
     val useLocal = false
 
-    val moshi: Moshi = Moshi.Builder().build()
+    val moshi: Moshi = Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
     val jsonAdapter: JsonAdapter<Stats> = moshi.adapter(Stats::class.java)
 
     val dailyStats = if (useLocal) {
         println("Loading local data")
         val input = WikipediaService::class.java.getResourceAsStream(dataSet.localSource)
-        val source = Okio.buffer(Okio.source(input))
+        val source = input.source().buffer()
         jsonAdapter.fromJson(source)
     } else {
         println("Fetching remote data from Wikimedia")

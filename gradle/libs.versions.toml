@@ -1,9 +1,15 @@
 [versions]
-kotlin = "1.9.21"
-compose = "1.5.11"
+kotlin = "2.0.0"
+compose = "1.6.11"
 aurora = "2.0-SNAPSHOT"
-retrofit = "2.9.0"
-versionchecker = "0.50.0"
+retrofit = "2.11.0"
+moshi = "1.15.1"
+versionchecker = "0.51.0"
+
+[plugins]
+jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose" }
+kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 
 [libraries]
 compose-desktop = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "compose" }
@@ -11,6 +17,7 @@ kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", ve
 
 retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
+moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
 
 aurora-theming = { module = "org.pushing-pixels:aurora-theming", version.ref = "aurora" }
 aurora-component = { module = "org.pushing-pixels:aurora-component", version.ref = "aurora" }

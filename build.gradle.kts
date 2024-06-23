@@ -1,8 +1,10 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.9.21"
-    id("org.jetbrains.compose") version "1.5.11"
+    kotlin("jvm") version "2.0.0"
+    alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.compose.compiler)
     idea
 }
 
@@ -34,9 +36,9 @@ repositories {
 }
 
 dependencies {
-    implementation(compose.desktop.currentOs)
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.moshi)
+    implementation(libs.moshi.kotlin)
     implementation(libs.aurora.theming)
     implementation(libs.aurora.component)
     implementation(libs.aurora.window)
@@ -50,7 +52,7 @@ tasks.register<org.pushingpixels.aurora.tools.svgtranscoder.gradle.TranscodeTask
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "11"
+    compilerOptions.jvmTarget.set(JvmTarget.JVM_11)
     dependsOn("transcodeSingle")
 }
 
