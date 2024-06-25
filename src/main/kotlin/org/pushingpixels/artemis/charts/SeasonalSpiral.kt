@@ -189,12 +189,12 @@ fun main() = application {
     val useLocal = false
 
     val moshi: Moshi = Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
-    val jsonAdapter: JsonAdapter<Stats> = moshi.adapter(Stats::class.java)
-
     val dailyStats = if (useLocal) {
         println("Loading local data")
+
         val input = WikipediaService::class.java.getResourceAsStream(dataSet.localSource)
         val source = input.source().buffer()
+        val jsonAdapter: JsonAdapter<Stats> = moshi.adapter(Stats::class.java)
         jsonAdapter.fromJson(source)
     } else {
         println("Fetching remote data from Wikimedia")
@@ -205,7 +205,7 @@ fun main() = application {
         val retrofit = Retrofit.Builder()
             .baseUrl(WikipediaService.API_URL)
             .client(OkHttpClient.Builder().build())
-            .addConverterFactory(MoshiConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
 
         val service = retrofit.create(WikipediaService::class.java)
