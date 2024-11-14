@@ -395,7 +395,7 @@ fun main() = application {
 
                 val textPaint = org.jetbrains.skia.Paint()
                 textPaint.color4f = Color4f(0.2f, 0.2f, 0.2f, 1.0f)
-                val font = Font(Typeface.makeDefault(), 24.0f)
+                val font = Font(Typeface.makeEmpty(), 24.0f)
 
                 val legendTextX = colorLegendLeft + colorLegendWidth + 4.dp.toPx()
                 nativeCanvas.drawString(

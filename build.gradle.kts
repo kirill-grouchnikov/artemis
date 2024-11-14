@@ -14,6 +14,7 @@ version = "1.0.0"
 buildscript {
     repositories {
         mavenLocal()
+        google()
         mavenCentral()
         maven("https://plugins.gradle.org/m2/")
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
@@ -30,6 +31,7 @@ buildscript {
 
 repositories {
     mavenLocal()
+    google()
     mavenCentral()
     maven { url = uri("https://maven.pkg.jetbrains.space/public/p/compose/dev") }
     maven { url = uri("https://oss.sonatype.org/content/repositories/snapshots") }

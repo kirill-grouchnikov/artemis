@@ -53,7 +53,7 @@ fun DrawScope.drawTextOnPath(
     this.drawIntoCanvas {
         val nativeCanvas = it.nativeCanvas
 
-        val skiaFont = Font(Typeface.makeDefault())
+        val skiaFont = Font(Typeface.makeEmpty())
         skiaFont.size = textSize.toPx()
         skiaFont.isEmboldened = isEmboldened
 
