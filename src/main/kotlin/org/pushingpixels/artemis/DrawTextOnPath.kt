@@ -53,7 +53,7 @@ fun DrawScope.drawTextOnPath(
     this.drawIntoCanvas {
         val nativeCanvas = it.nativeCanvas
 
-        val typeface = FontMgr.default.makeFromFile("src/main/resources/fonts/Inter-UI-Regular.ttf")
+        val typeface = FontMgr.default.makeFromFile("src/main/resources/fonts/InterVariable.ttf")
         val skiaFont = Font(typeface, textSize.toPx()).also { font ->
             font.edging = FontEdging.SUBPIXEL_ANTI_ALIAS
             font.hinting = FontHinting.SLIGHT

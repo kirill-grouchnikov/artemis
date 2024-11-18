@@ -394,7 +394,7 @@ fun main() = application {
 
                 val textPaint = org.jetbrains.skia.Paint()
                 textPaint.color4f = Color4f(0.2f, 0.2f, 0.2f, 1.0f)
-                val typeface = FontMgr.default.makeFromFile("src/main/resources/fonts/Inter-UI-Regular.ttf")
+                val typeface = FontMgr.default.makeFromFile("src/main/resources/fonts/InterVariable.ttf")
                 val font = Font(typeface, 24.0f).also { font ->
                     font.edging = FontEdging.SUBPIXEL_ANTI_ALIAS
                     font.hinting = FontHinting.SLIGHT
