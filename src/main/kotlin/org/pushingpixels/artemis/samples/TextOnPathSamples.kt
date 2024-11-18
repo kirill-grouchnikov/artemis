@@ -65,9 +65,9 @@ fun main() = application {
             // A path with three quad Bezier segments
             val path = androidx.compose.ui.graphics.Path()
             path.moveTo(30.dp.toPx(), 30.dp.toPx())
-            path.quadraticBezierTo(80.dp.toPx(), 40.dp.toPx(), 95.dp.toPx(), 100.dp.toPx())
-            path.quadraticBezierTo(110.dp.toPx(), 170.dp.toPx(), 160.dp.toPx(), 170.dp.toPx())
-            path.quadraticBezierTo(220.dp.toPx(), 175.dp.toPx(), 225.dp.toPx(), 70.dp.toPx())
+            path.quadraticTo(80.dp.toPx(), 40.dp.toPx(), 95.dp.toPx(), 100.dp.toPx())
+            path.quadraticTo(110.dp.toPx(), 170.dp.toPx(), 160.dp.toPx(), 170.dp.toPx())
+            path.quadraticTo(220.dp.toPx(), 175.dp.toPx(), 225.dp.toPx(), 70.dp.toPx())
 
             drawPath(path = path, color = Color.Red, style = Stroke())
             drawTextOnPath(
@@ -133,7 +133,7 @@ fun main() = application {
             val path4 = androidx.compose.ui.graphics.Path()
             path4.moveTo(94.dp.toPx(), 335.dp.toPx())
             path4.lineTo(125.dp.toPx(), 275.dp.toPx())
-            path4.quadraticBezierTo(158.dp.toPx(), 202.dp.toPx(), 300.dp.toPx(), 200.dp.toPx())
+            path4.quadraticTo(158.dp.toPx(), 202.dp.toPx(), 300.dp.toPx(), 200.dp.toPx())
             path4.lineTo(400.dp.toPx(), 200.dp.toPx())
 
             drawPath(path = path4, color = darkGrey, style = Stroke())
