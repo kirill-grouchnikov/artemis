@@ -39,6 +39,7 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.geometry.center
 import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.text.style.TextAlign
@@ -52,9 +53,7 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
 import okio.buffer
 import okio.source
-import org.jetbrains.skia.Color4f
-import org.jetbrains.skia.Font
-import org.jetbrains.skia.Typeface
+import org.jetbrains.skia.*
 import org.pushingpixels.artemis.drawTextOnPath
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -395,7 +394,11 @@ fun main() = application {
 
                 val textPaint = org.jetbrains.skia.Paint()
                 textPaint.color4f = Color4f(0.2f, 0.2f, 0.2f, 1.0f)
-                val font = Font(Typeface.makeEmpty(), 24.0f)
+                val typeface = FontMgr.default.makeFromFile("src/main/resources/fonts/Inter-UI-Regular.ttf")
+                val font = Font(typeface, 24.0f).also { font ->
+                    font.edging = FontEdging.SUBPIXEL_ANTI_ALIAS
+                    font.hinting = FontHinting.SLIGHT
+                }
 
                 val legendTextX = colorLegendLeft + colorLegendWidth + 4.dp.toPx()
                 nativeCanvas.drawString(

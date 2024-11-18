@@ -53,9 +53,12 @@ fun DrawScope.drawTextOnPath(
     this.drawIntoCanvas {
         val nativeCanvas = it.nativeCanvas
 
-        val skiaFont = Font(Typeface.makeEmpty())
-        skiaFont.size = textSize.toPx()
-        skiaFont.isEmboldened = isEmboldened
+        val typeface = FontMgr.default.makeFromFile("src/main/resources/fonts/Inter-UI-Regular.ttf")
+        val skiaFont = Font(typeface, textSize.toPx()).also { font ->
+            font.edging = FontEdging.SUBPIXEL_ANTI_ALIAS
+            font.hinting = FontHinting.SLIGHT
+            font.isEmboldened = isEmboldened
+        }
 
         // Get string glyphs, and compute the width and position of each glyph in the string
         val glyphs = skiaFont.getStringGlyphs(text)
