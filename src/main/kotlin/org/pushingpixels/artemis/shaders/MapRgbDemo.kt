@@ -42,10 +42,10 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.skia.ImageFilter
 import org.jetbrains.skia.RuntimeEffect
 import org.jetbrains.skia.RuntimeShaderBuilder
-import java.awt.Point
-import java.awt.event.MouseEvent
 import org.pushingpixels.artemis.resources.Res
 import org.pushingpixels.artemis.resources.worldmap_small
+import java.awt.Point
+import java.awt.event.MouseEvent
 
 @Language("GLSL")
 private val displaceSksl = """
@@ -135,7 +135,7 @@ fun main() = application {
                         intensityAmount.animateTo(targetValue = 0.0f,
                             animationSpec = keyframes {
                                 durationMillis = 200
-                                0.0f at 0 with FastOutSlowInEasing
+                                0.0f at 0 using FastOutSlowInEasing
                                 1.0f at 150
                             }
                         )
