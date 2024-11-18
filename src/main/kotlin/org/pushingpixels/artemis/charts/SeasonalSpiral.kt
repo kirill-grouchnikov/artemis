@@ -293,7 +293,7 @@ fun main() = application {
                             y = centerY - radiusDayD * cos(endAngle.toRad())
                         )
 
-                        val path = androidx.compose.ui.graphics.Path()
+                        val path = Path()
                         path.moveTo(A.x, A.y)
                         path.lineTo(B.x, B.y)
                         path.lineTo(C.x, C.y)

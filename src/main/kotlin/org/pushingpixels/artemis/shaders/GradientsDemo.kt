@@ -149,7 +149,7 @@ private fun GradientSectionByColor(gradients: Gradients, modifier: Modifier) {
 
         Spacer(modifier = Modifier.height(4.dp))
 
-        for (brush in Brushes.values()) {
+        for (brush in Brushes.entries) {
             SingleGradientSection(brush.desc, gradients.colors, brush.brushCreator)
         }
     }
@@ -169,7 +169,7 @@ private fun GradientSectionByBrush(brushes: Brushes, modifier: Modifier) {
 
         Spacer(modifier = Modifier.height(4.dp))
 
-        for (gradient in Gradients.values()) {
+        for (gradient in Gradients.entries) {
             SingleGradientSection(gradient.desc, gradient.colors, brushes.brushCreator)
         }
     }
