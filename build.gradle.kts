@@ -63,6 +63,7 @@ dependencies {
     implementation(libs.aurora.component)
     implementation(libs.aurora.window)
     implementation("org.jetbrains.skiko:skiko-awt-runtime-$skikoTarget:$skikoVersion")
+    implementation(compose.components.resources)
 }
 
 tasks.register<org.pushingpixels.aurora.tools.svgtranscoder.gradle.TranscodeTask>("transcodeSingle") {
@@ -91,7 +92,18 @@ kotlin {
                 kotlin.srcDir("$rootDir/src/main/kotlin")
                 kotlin.srcDir("$rootDir/src/gen/kotlin")
             }
+            dependencies {
+                implementation(compose.components.resources)
+            }
         }
+    }
+}
+
+compose {
+    resources {
+        publicResClass = false
+        packageOfResClass = "org.pushingpixels.artemis.resources"
+        generateResClass = auto
     }
 }
 

@@ -26,16 +26,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asComposeRenderEffect
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.onSizeChanged
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.*
 import org.intellij.lang.annotations.Language
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.skia.FilterTileMode
 import org.jetbrains.skia.ImageFilter
 import org.jetbrains.skia.RuntimeEffect
 import org.jetbrains.skia.RuntimeShaderBuilder
+import org.pushingpixels.artemis.resources.Res
+import org.pushingpixels.artemis.resources.reduce_capacity_200
 
 @Language("GLSL")
 private val flutedGlassSksl = """
@@ -107,7 +109,7 @@ fun main() = application {
         flutedGlassBuilder.uniform("height", imageSize.value.height.toFloat())
 
         Image(
-            painter = painterResource("/icon/reduce_capacity_200.png"),
+            painter = painterResource(Res.drawable.reduce_capacity_200),
             contentDescription = "Icon",
             modifier = Modifier.fillMaxSize()
                 .background(Color.LightGray)

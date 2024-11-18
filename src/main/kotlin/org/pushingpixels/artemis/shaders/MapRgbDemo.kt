@@ -32,18 +32,20 @@ import androidx.compose.ui.input.pointer.PointerEventType
 import androidx.compose.ui.input.pointer.onPointerEvent
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.*
 import kotlinx.coroutines.launch
 import org.intellij.lang.annotations.Language
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.skia.ImageFilter
 import org.jetbrains.skia.RuntimeEffect
 import org.jetbrains.skia.RuntimeShaderBuilder
 import java.awt.Point
 import java.awt.event.MouseEvent
+import org.pushingpixels.artemis.resources.Res
+import org.pushingpixels.artemis.resources.worldmap_small
 
 @Language("GLSL")
 private val displaceSksl = """
@@ -114,7 +116,7 @@ fun main() = application {
             clickPoint.value.y * density)
 
         Image(
-            painter = painterResource("/map/worldmap-small.png"),
+            painter = painterResource(Res.drawable.worldmap_small),
             contentDescription = "World Map",
             modifier = Modifier.fillMaxSize()
                 .onSizeChanged { mapSize.value = it }
