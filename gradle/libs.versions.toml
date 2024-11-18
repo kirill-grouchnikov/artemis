@@ -1,5 +1,5 @@
 [versions]
-kotlin = "2.0.0"
+kotlin = "2.0.10"
 compose = "1.7.1"
 aurora = "2.0-SNAPSHOT"
 retrofit = "2.11.0"
