@@ -1,6 +1,6 @@
 [versions]
 kotlin = "2.2.20"
-compose = "1.8.0"
+compose = "1.9.3"
 aurora = "2.0-SNAPSHOT"
 retrofit = "3.0.0"
 moshi = "1.15.2"
