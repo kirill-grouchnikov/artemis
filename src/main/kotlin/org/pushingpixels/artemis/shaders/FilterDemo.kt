@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ShaderBrush
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowPlacement
@@ -36,11 +37,13 @@ import org.jetbrains.skia.Data
 import org.jetbrains.skia.RuntimeEffect
 import org.jetbrains.skia.Shader
 import org.pushingpixels.aurora.theming.businessSkin
-import org.pushingpixels.aurora.theming.colorscheme.MetallicColorScheme
-import org.pushingpixels.aurora.theming.colorscheme.OrangeColorScheme
+import org.pushingpixels.aurora.theming.palette.TonalPaletteSeeds
+import org.pushingpixels.aurora.theming.palette.getContainerTokens
 import org.pushingpixels.aurora.window.AuroraWindow
 import org.pushingpixels.aurora.window.AuroraWindowTitlePaneConfigurations
 import org.pushingpixels.aurora.window.auroraApplication
+import org.pushingpixels.ephemeral.chroma.dynamiccolor.ContainerConfiguration
+import org.pushingpixels.ephemeral.chroma.hct.Hct
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
@@ -58,21 +61,27 @@ fun main() = auroraApplication {
         windowTitlePaneConfiguration = AuroraWindowTitlePaneConfigurations.AuroraPlain(),
         onCloseRequest = ::exitApplication,
     ) {
-        val metallic = MetallicColorScheme()
-        val orange = OrangeColorScheme()
+        val metallic = getContainerTokens(
+            seed = Hct.fromInt(TonalPaletteSeeds.Metallic.toArgb()),
+            containerConfiguration = ContainerConfiguration.defaultLight()
+        )
+        val orange = getContainerTokens(
+            seed = Hct.fromInt(TonalPaletteSeeds.Orange.toArgb()),
+            containerConfiguration = ContainerConfiguration.defaultLight()
+        )
 
-        val noiseMetallicShader = getNoiseShader(metallic.extraLightColor, metallic.darkColor)
-        val noiseOrangeShader = getNoiseShader(orange.midColor, orange.ultraDarkColor, 1.0f, 0.25f)
-        val noiseOrangeShaderAlpha = getNoiseShader(orange.midColor, Color.Black, 0.5f, 0.05f)
+        val noiseMetallicShader = getNoiseShader(metallic.containerSurfaceBright, metallic.containerSurfaceDim)
+        val noiseOrangeShader = getNoiseShader(orange.containerSurfaceBright, orange.containerSurfaceDim, 1.0f, 0.25f)
+        val noiseOrangeShaderAlpha = getNoiseShader(orange.containerSurface, Color.Black, 0.5f, 0.05f)
 
         val brushedMetalShader = getBrushedMetalShader(
-            metallic.lightColor, metallic.ultraDarkColor, 1.0f
+            metallic.containerSurfaceBright, metallic.containerSurfaceDim, 1.0f
         )
         val brushedMetalOrangeShader = getBrushedMetalShader(
-            orange.lightColor, orange.ultraDarkColor, 1.0f
+            orange.containerSurfaceBright, orange.containerSurfaceDim, 1.0f
         )
         val brushedMetalOrangeShaderAlpha = getBrushedMetalShader(
-            orange.lightColor, orange.ultraDarkColor, 0.5f
+            orange.containerSurfaceBright, orange.containerSurfaceDim, 0.5f
         )
 
         Box(modifier = Modifier.size(500.dp).paint(painter = object : Painter() {

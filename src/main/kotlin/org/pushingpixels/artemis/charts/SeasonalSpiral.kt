@@ -185,7 +185,7 @@ val PRIME_NUMBER = DataSet(
 // 3. Put it as the matching *.json file under the /resources folder
 fun main() = application {
     val dataSet = SOURDOUGH
-    val useLocal = false
+    val useLocal = true
 
     val moshi: Moshi = Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
     val dailyStats = if (useLocal) {

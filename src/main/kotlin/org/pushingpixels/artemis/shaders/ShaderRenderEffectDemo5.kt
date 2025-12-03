@@ -132,11 +132,11 @@ fun main() = auroraApplication {
 
         Box(modifier = Modifier.fillMaxSize()) {
             val decorationAreaType = AuroraSkin.decorationAreaType
-            val rolloverFill = AuroraSkin.colors.getColorScheme(
+            val rolloverFill = AuroraSkin.colors.getActiveContainerTokens(
                 decorationAreaType = decorationAreaType,
-                associationKind = ColorSchemeAssociationKind.Fill,
+                associationKind = ContainerColorTokensAssociationKind.Default,
                 componentState = ComponentState.RolloverUnselected
-            ).backgroundFillColor
+            ).containerSurface
             glowShaderBuilder.uniform(
                 "glowColor", rolloverFill.red, rolloverFill.green,
                 rolloverFill.blue, rolloverFill.alpha

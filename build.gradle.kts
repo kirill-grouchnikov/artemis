@@ -18,7 +18,7 @@ buildscript {
         mavenCentral()
         maven("https://plugins.gradle.org/m2/")
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
-        maven("https://oss.sonatype.org/content/repositories/snapshots")
+        maven("https://central.sonatype.com/repository/maven-snapshots/")
     }
 
     dependencies {
@@ -34,13 +34,14 @@ repositories {
     google()
     mavenCentral()
     maven { url = uri("https://maven.pkg.jetbrains.space/public/p/compose/dev") }
-    maven { url = uri("https://oss.sonatype.org/content/repositories/snapshots") }
+    maven { url = uri("https://central.sonatype.com/repository/maven-snapshots/") }
 }
 
 dependencies {
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.moshi)
     implementation(libs.moshi.kotlin)
+    implementation(libs.ephemeral.chroma)
     implementation(libs.aurora.theming)
     implementation(libs.aurora.component)
     implementation(libs.aurora.window)
