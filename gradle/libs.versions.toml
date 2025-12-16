@@ -1,8 +1,8 @@
 [versions]
 kotlin = "2.2.20"
 compose = "1.9.3"
-aurora = "2.0-SNAPSHOT"
-ephemeral-chroma = "1.5-SNAPSHOT"
+aurora = "2.0.0"
+ephemeral-chroma = "1.5.0"
 retrofit = "3.0.0"
 moshi = "1.15.2"
 versionchecker = "0.53.0"
