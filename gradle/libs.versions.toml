@@ -23,6 +23,6 @@ aurora-theming = { module = "org.pushing-pixels:aurora-theming", version.ref = "
 aurora-component = { module = "org.pushing-pixels:aurora-component", version.ref = "aurora" }
 aurora-window = { module = "org.pushing-pixels:aurora-window", version.ref = "aurora" }
 aurora-svgtranscoder-gradlePlugin = { module = "org.pushing-pixels:aurora-tools-svg-transcoder-gradle-plugin", version.ref = "aurora" }
-ephemeral-chroma = { module = "org.pushing-pixels:ephemeral-chroma-java", version.ref = "ephemeral_chroma" }
+ephemeral-chroma = { module = "org.pushing-pixels:ephemeral-chroma-java", version.ref = "ephemeral-chroma" }
 
 versionchecker-gradlePlugin = { module = "com.github.ben-manes:gradle-versions-plugin", version.ref = "versionchecker" }
