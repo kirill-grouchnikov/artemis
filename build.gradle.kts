@@ -46,7 +46,7 @@ dependencies {
     implementation(libs.aurora.component)
     implementation(libs.aurora.window)
     api(compose.desktop.currentOs)
-    implementation(compose.components.resources)
+    implementation(libs.compose.components.resources)
 }
 
 tasks.register<org.pushingpixels.aurora.tools.svgtranscoder.gradle.TranscodeTask>("transcodeSingle") {
@@ -76,7 +76,7 @@ kotlin {
                 kotlin.srcDir("$rootDir/src/gen/kotlin")
             }
             dependencies {
-                implementation(compose.components.resources)
+                implementation(libs.compose.components.resources)
             }
         }
     }
