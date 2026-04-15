@@ -25,6 +25,7 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.ShaderBrush
+import androidx.compose.ui.graphics.asComposeShader
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.*
@@ -83,7 +84,7 @@ fun main() = application {
             children = null,
             localMatrix = null
         )
-        val brush = ShaderBrush(shader)
+        val brush = ShaderBrush(shader.asComposeShader())
 
         Box(modifier = Modifier.fillMaxSize().drawBehind {
             drawRect(

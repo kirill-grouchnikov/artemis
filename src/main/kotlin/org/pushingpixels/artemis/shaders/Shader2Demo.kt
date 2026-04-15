@@ -25,7 +25,7 @@ import androidx.compose.ui.draw.paint
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
-import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.graphics.skiaCanvas
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
@@ -152,10 +152,10 @@ fun main() = application {
 
             override fun DrawScope.onDraw() {
                 this.drawIntoCanvas {
-                    val nativeCanvas = it.nativeCanvas
-                    nativeCanvas.translate(100f, 65f)
-                    nativeCanvas.clipRect(Rect.makeWH(400f, 400f))
-                    nativeCanvas.drawPaint(shaderPaint)
+                    val skiaCanvas = it.skiaCanvas
+                    skiaCanvas.translate(100f, 65f)
+                    skiaCanvas.clipRect(Rect.makeWH(400f, 400f))
+                    skiaCanvas.drawPaint(shaderPaint)
                 }
             }
         }))

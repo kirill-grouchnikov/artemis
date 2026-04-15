@@ -33,6 +33,7 @@ package org.pushingpixels.artemis
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ShaderBrush
+import androidx.compose.ui.graphics.asComposeShader
 import org.jetbrains.skia.Data
 import org.jetbrains.skia.RuntimeEffect
 import java.nio.ByteBuffer
@@ -96,5 +97,5 @@ fun horizontalSrgbGradient(
         localMatrix = null
     )
 
-    return ShaderBrush(shader)
+    return ShaderBrush(shader.asComposeShader())
 }

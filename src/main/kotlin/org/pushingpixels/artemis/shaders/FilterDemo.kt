@@ -24,6 +24,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ShaderBrush
+import androidx.compose.ui.graphics.asComposeShader
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.toArgb
@@ -90,37 +91,37 @@ fun main() = auroraApplication {
 
             override fun DrawScope.onDraw() {
                 drawRect(
-                    brush = ShaderBrush(noiseMetallicShader),
+                    brush = ShaderBrush(noiseMetallicShader.asComposeShader()),
                     topLeft = Offset(20f, 20f),
                     size = Size(400f, 400f)
                 )
 
                 drawRect(
-                    brush = ShaderBrush(noiseOrangeShader),
+                    brush = ShaderBrush(noiseOrangeShader.asComposeShader()),
                     topLeft = Offset(440f, 20f),
                     size = Size(400f, 400f)
                 )
 
                 drawRect(
-                    brush = ShaderBrush(noiseOrangeShaderAlpha),
+                    brush = ShaderBrush(noiseOrangeShaderAlpha.asComposeShader()),
                     topLeft = Offset(860f, 20f),
                     size = Size(400f, 400f)
                 )
 
                 drawRect(
-                    brush = ShaderBrush(brushedMetalShader),
+                    brush = ShaderBrush(brushedMetalShader.asComposeShader()),
                     topLeft = Offset(20f, 440f),
                     size = Size(400f, 400f)
                 )
 
                 drawRect(
-                    brush = ShaderBrush(brushedMetalOrangeShader),
+                    brush = ShaderBrush(brushedMetalOrangeShader.asComposeShader()),
                     topLeft = Offset(440f, 440f),
                     size = Size(400f, 400f)
                 )
 
                 drawRect(
-                    brush = ShaderBrush(brushedMetalOrangeShaderAlpha),
+                    brush = ShaderBrush(brushedMetalOrangeShaderAlpha.asComposeShader()),
                     topLeft = Offset(860f, 440f),
                     size = Size(400f, 400f)
                 )

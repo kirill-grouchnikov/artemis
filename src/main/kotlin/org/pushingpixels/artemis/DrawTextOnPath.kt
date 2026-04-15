@@ -35,7 +35,7 @@ import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.asSkiaPath
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
-import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.graphics.skiaCanvas
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import org.jetbrains.skia.*
@@ -51,7 +51,7 @@ fun DrawScope.drawTextOnPath(
     shadow: Shadow? = null
 ) {
     this.drawIntoCanvas {
-        val nativeCanvas = it.nativeCanvas
+        val skiaCanvas = it.skiaCanvas
 
         val typeface = FontMgr.default.makeFromFile("src/main/resources/fonts/InterVariable.ttf")
         val skiaFont = Font(typeface, textSize.toPx()).also { font ->
@@ -139,7 +139,7 @@ fun DrawScope.drawTextOnPath(
         val textBlob = textBlobBuilder.build()!!
 
         if (shadow != null) {
-            nativeCanvas.drawTextBlob(
+            skiaCanvas.drawTextBlob(
                 blob = textBlob,
                 x = shadow.offset.x,
                 y = shadow.offset.y,
@@ -155,7 +155,7 @@ fun DrawScope.drawTextOnPath(
                 }
             )
         }
-        nativeCanvas.drawTextBlob(
+        skiaCanvas.drawTextBlob(
             blob = textBlob,
             x = 0.0f, y = 0.0f,
             paint = paint.asFrameworkPaint()

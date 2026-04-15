@@ -24,6 +24,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ShaderBrush
+import androidx.compose.ui.graphics.asComposeShader
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -277,7 +278,7 @@ private val OklabSkiaBrushCreator: (Float, GradientColors) -> Brush =
             localMatrix = null
         )
 
-        ShaderBrush(shader)
+        ShaderBrush(shader.asComposeShader())
     }
 
 private val OklabBezierSkiaBrushCreator: (Float, GradientColors) -> Brush =
@@ -380,7 +381,7 @@ private val OklabBezierSkiaBrushCreator: (Float, GradientColors) -> Brush =
             localMatrix = null
         )
 
-        ShaderBrush(shader)
+        ShaderBrush(shader.asComposeShader())
     }
 
 private val OklchSkiaBrushCreator: (Float, GradientColors) -> Brush =
@@ -488,7 +489,7 @@ private val OklchSkiaBrushCreator: (Float, GradientColors) -> Brush =
             localMatrix = null
         )
 
-        ShaderBrush(shader)
+        ShaderBrush(shader.asComposeShader())
     }
 
 enum class Brushes(val desc: String, val brushCreator: (Float, GradientColors) -> Brush) {

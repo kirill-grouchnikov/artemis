@@ -390,7 +390,7 @@ fun main() = application {
             }
 
             this.drawIntoCanvas {
-                val nativeCanvas = it.nativeCanvas
+                val skiaCanvas = it.skiaCanvas
 
                 val textPaint = org.jetbrains.skia.Paint()
                 textPaint.color4f = Color4f(0.2f, 0.2f, 0.2f, 1.0f)
@@ -401,14 +401,14 @@ fun main() = application {
                 }
 
                 val legendTextX = colorLegendLeft + colorLegendWidth + 4.dp.toPx()
-                nativeCanvas.drawString(
+                skiaCanvas.drawString(
                     (lowestHitCount / 1000).toString() + "K",
                     legendTextX,
                     size.height - 36.dp.toPx(),
                     font,
                     textPaint
                 )
-                nativeCanvas.drawString(
+                skiaCanvas.drawString(
                     (dataSet.gradients.getMidPoint(
                         lowestHitCount,
                         highestHitCount
@@ -418,7 +418,7 @@ fun main() = application {
                     font,
                     textPaint
                 )
-                nativeCanvas.drawString(
+                skiaCanvas.drawString(
                     (highestHitCount / 1000).toString() + "K",
                     legendTextX,
                     size.height - 36.dp.toPx() - colorLegendHeight,
