@@ -1,11 +1,11 @@
 [versions]
-kotlin = "2.3.20"
-compose = "1.11.0-beta02"
+kotlin = "2.4.0"
+compose = "1.11.1"
 aurora = "2.5-SNAPSHOT"
 ephemeral-chroma = "1.6-SNAPSHOT"
 retrofit = "3.0.0"
 moshi = "1.15.2"
-versionchecker = "0.53.0"
+versionchecker = "0.54.0"
 
 [plugins]
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose" }

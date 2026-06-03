@@ -133,7 +133,7 @@ enum class Gradients(val desc: String, val colors: GradientColors) {
     CyanRed("Cyan-Red", GradientColors(Color.Cyan, Color.Red)),
     GreenMagenta("Green-Magenta", GradientColors(Color.Green, Color.Magenta)),
     WhiteBlue("OffWhite-Blue", GradientColors(Color(0xFFFFFFFE), Color.Blue)),
-    PeachTeal("Peach-Teal", GradientColors(Color(0xFFFFE5B4), Color(0xFF008080)))
+    PeachTeal("Peach-Teal", GradientColors(Color(0xFFBABBBB), Color(0xFFffe000)))
 }
 
 @ExperimentalUnitApi
