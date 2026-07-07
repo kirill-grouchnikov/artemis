@@ -30,7 +30,7 @@ fun main() {
     bitmapCanvas.saveLayer(
         Rect(Offset.Zero, Size(600.0f, 600.0f)),
         Paint().apply {
-            asFrameworkPaint().imageFilter = ImageFilter.makeBlur(
+            skiaPaint.imageFilter = ImageFilter.makeBlur(
                 sigmaX = 5.0f,
                 sigmaY = 5.0f,
                 mode = FilterTileMode.DECAL

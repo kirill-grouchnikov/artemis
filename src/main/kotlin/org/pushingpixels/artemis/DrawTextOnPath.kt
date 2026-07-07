@@ -36,6 +36,7 @@ import androidx.compose.ui.graphics.asSkiaPath
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.skiaCanvas
+import androidx.compose.ui.graphics.skiaPaint
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import org.jetbrains.skia.*
@@ -158,7 +159,7 @@ fun DrawScope.drawTextOnPath(
         skiaCanvas.drawTextBlob(
             blob = textBlob,
             x = 0.0f, y = 0.0f,
-            paint = paint.asFrameworkPaint()
+            paint = paint.skiaPaint
         )
     }
 }
