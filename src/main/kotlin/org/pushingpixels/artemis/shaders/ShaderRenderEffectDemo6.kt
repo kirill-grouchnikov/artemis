@@ -63,11 +63,16 @@ fun main() = auroraApplication {
     compositeShaderBuilder.uniform("cutoff", 100.0f)
     compositeShaderBuilder.child(
         "gradient",
-        Shader.Companion.makeLinearGradient(
+        Shader.makeLinearGradient(
             x0 = 0.0f, y0 = 0.0f,
             x1 = 200.0f, y1 = 0.0f,
-            colors = intArrayOf(org.jetbrains.skia.Color.RED, org.jetbrains.skia.Color.BLUE),
-            style = GradientStyle.DEFAULT
+            gradient = Gradient(
+                colors = Gradient.Colors(
+                    colors = arrayOf(Color4f(r = 1.0f, g = 0.0f, b = 0.0f, a = 1.0f),
+                        Color4f(r = 0.0f, g = 0.0f, b = 1.0f, a = 1.0f)),
+                    tileMode = FilterTileMode.CLAMP
+                )
+            ),
         )
     )
 
