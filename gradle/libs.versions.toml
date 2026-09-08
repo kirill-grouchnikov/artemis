@@ -1,5 +1,5 @@
 [versions]
-kotlin = "2.4.0"
+kotlin = "2.4.20"
 compose = "1.12.0"
 aurora = "3.0-SNAPSHOT"
 ephemeral-chroma = "2.5-SNAPSHOT"
